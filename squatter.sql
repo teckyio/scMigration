@@ -1,6 +1,8 @@
 
 DECLARE
     v_error_message VARCHAR2(4000);
+    v_guid VARCHAR2(36);
+    v_dlo_id VARCHAR2(36);
 BEGIN
     FOR rec IN (
         SELECT
@@ -50,37 +52,49 @@ BEGIN
             APPROVED_DELETE_DATE,
             APPROVED_REINSTATE_DATE,
             APPROVED_AMEND_DATE
-        FROM OLDDB.SQUATTER
+        FROM SDE_SQ.SQUATTER
     ) LOOP
         BEGIN
+            generate_Formatted_GUID(v_guid);
+            find_dlo_id(rec.DLOOFFICE, v_dlo_id);
             -- Insert into new table
-            INSERT INTO NEWDB.SQUATTERS (
+            INSERT INTO SQ.SQUATTERS (
+                ID, 
                 OBJECT_ID, SQUATTER_ID, DIMENSIONS_L, DIMENSIONS_B, DIMENSIONS_H, 
-                SURVEY_LOCATION, DLO_ID, FILE_NAME, STATUS, CREATED_DATE, SQUATTER_DISTRICT, 
+                SURVEY_LOCATION, DLO_ID, FILE_NAME, STATUS, CREATED_DATE, DISTRICT, 
                 PLAN_FILE_NAME, CREATED_USER, LAST_EDITED_USER, LAST_EDITED_DATE, CIS_SQUATTER_ID, 
                 BOOK_NO, SERIAL_NO, SURVEY_NO, FILE_REF, ISSUE, SC_OFFICE, SURVEY_NO_PREFIX, 
-                HAS_REMARK, HOUSE_NO, DISPLAY_NAME, BOUNDARY_STATUS, DIMENSION_UNIT, 
-                SERIAL_NO_EDIT, RECORD_DATE_EDIT, JOB_NO, CASE_REFERENCE, AMEND_DATE, 
-                DELETE_REASON, CLEARANCE_NO, DELETE_DATE, REINSTATE_DATE, APPROVE_STATUS, VERSION, 
+                HAS_REMARK, HOUSE_NO, DISPLAY_NAME,
+                BOUNDARY_STATUS, UNITS, 
+                SERIAL_NO_EDIT, RECORD_DATE_EDIT, 
+                DELETE_REASON,
+                DELETE_DATE, REINSTATE_DATE, APPROVE_STATUS, VERSION, 
                 SURVEY_RECORD_1982, APPROVED_CREATION_DATE, APPROVED_DELETE_DATE, 
                 APPROVED_REINSTATE_DATE, APPROVED_AMEND_DATE
             ) VALUES (
+                v_guid,
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
-                rec.LOCATION, (SELECT ID FROM NEWDB.DLOS WHERE DLO_NAME = rec.DLOOFFICE), 
+                rec.LOCATION, v_dlo_id, 
                 rec.FILENAME, rec.STATUS, rec.RECORDDATE, rec.SQUATTERDISTRICT, rec.PLANFILENAME, 
                 rec.CREATED_USER, rec.CREATED_DATE, rec.LAST_EDITED_USER, rec.LAST_EDITED_DATE, 
                 rec.CISSQUATTERID, rec.BOOKNO, rec.SERIALNO, rec.SURVEYNO, rec.FILEREF, rec.ISSUE, 
                 rec.SCOFFICE, rec.SURVEYNOPREFIX, rec.HASREMARK, rec.HOUSENO, rec.DISPLAYNAME, 
-                rec.BOUNDARYSTATUS, rec.DIMENSIONUNIT, rec.SERIALNO_EDIT, rec.RECORDDATE_EDIT, 
-                rec.JOBNO, rec.CASEFILE, rec.AMEND_DATE, rec.DELETE_REASON, rec.CLEARANCE_NO, 
-                rec.DELETE_DATE, rec.REINSTATE_DATE, rec.APPROVE_STATUS, rec.VERSION, 
+                rec.BOUNDARYSTATUS, rec.DIMENSIONUNIT, 
+                rec.SERIALNO_EDIT, rec.RECORDDATE_EDIT, 
+                rec.DELETE_REASON, 
+                rec.DELETE_DATE, rec.REIN_STATE_DATE, rec.APPROVE_STATUS, rec.VERSION, 
                 rec.SURVEYRECORD_1982, rec.APPROVED_CREATION_DATE, rec.APPROVED_DELETE_DATE, 
                 rec.APPROVED_REINSTATE_DATE, rec.APPROVED_AMEND_DATE
             );
         EXCEPTION
+            WHEN NO_DATA_FOUND (THEN
+                v_error_message := 'DLO_NAME not found for OBJECTID: ' || TO_CHAR(rec.OBJECTID);
+                log_error'SQUATTERS', v_error_message);
+                CONTINUE;
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
                 log_error('SQUATTERS', v_error_message);
+                CONTINUE;
         END;
     END LOOP;
 END;
