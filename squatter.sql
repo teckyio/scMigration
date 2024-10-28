@@ -51,8 +51,14 @@ BEGIN
             APPROVED_CREATION_DATE,
             APPROVED_DELETE_DATE,
             APPROVED_REINSTATE_DATE,
-            APPROVED_AMEND_DATE
+            APPROVED_AMEND_DATE,
+            JOB_NO,
+            CLEARANCE_NO,
+            AMEND_DATE,
+            CASE_FILE,
+            RECORD_DATE
         FROM SDE_SQ.SQUATTER
+        WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTERS)
     ) LOOP
         BEGIN
             generate_Formatted_GUID(v_guid);
@@ -66,15 +72,20 @@ BEGIN
                 PLAN_FILE_NAME, 
                 CREATED_USER, LAST_EDITED_USER, LAST_EDITED_DATE, 
                 CIS_SQUATTER_ID, 
-                BOOK_NO, SERIAL_NO, SURVEY_NO, FILE_REF, ISSUE, 
+                BOOK_NO, SERIAL_NO, SURVEY_NO, CASE_REFERENCE, ISSUE, 
                 SC_OFFICE, SURVEY_NO_PREFIX, 
                 HAS_REMARK, HOUSE_NO, DISPLAY_NAME,
                 BOUNDARY_STATUS, UNITS, 
                 SERIAL_NO_EDIT, RECORD_DATE_EDIT, 
                 DELETE_REASON,
                 DELETE_DATE, REINSTATE_DATE, APPROVE_STATUS, VERSION, 
-                SURVEY_RECORD1982, APPROVED_CREATION_DATE, APPROVED_DELETE_DATE, 
-                APPROVED_REINSTATE_DATE, APPROVED_AMEND_DATE
+                SURVERY_RECORD1982, APPROVED_CREATION_DATE, APPROVED_DELETE_DATE, 
+                APPROVED_REINSTATE_DATE, APPROVED_AMEND_DATE,
+                JOB_NO,
+                CLEARANCE_NO,
+                AMEND_DATE,
+                CASE_FILE,
+                RECORD_DATE
             ) VALUES (
                 v_guid,
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
@@ -91,7 +102,12 @@ BEGIN
                 rec.DELETE_REASON, 
                 rec.DELETE_DATE, rec.REIN_STATE_DATE, rec.APPROVE_STATUS, rec.VERSION, 
                 rec.SURVEYRECORD_1982, rec.APPROVED_CREATION_DATE, rec.APPROVED_DELETE_DATE, 
-                rec.APPROVED_REINSTATE_DATE, rec.APPROVED_AMEND_DATE
+                rec.APPROVED_REINSTATE_DATE, rec.APPROVED_AMEND_DATE,
+                JOB_NO,
+                CLEARANCE_NO,
+                AMEND_DATE,
+                CASE_FILE,
+                RECORD_DATE
             );
         EXCEPTION
             WHEN NO_DATA_FOUND (THEN
