@@ -27,12 +27,20 @@ BEGIN
     COMMIT;
 END;
 
-CREATE OR REPLACE PROCEDURE find_dlo_id (
-    dloname_in IN VARCHAR2,
-    dlo_id_out OUT NUMBER
+CREATE OR REPLACE PROCEDURE find_dlo_id(
+    p_dlooffice IN VARCHAR2,
+    p_dlo_id OUT VARCHAR2
 ) IS
 BEGIN
-    SELECT ID INTO dlo_id_out
-    FROM SQ.DLOS
-    WHERE DLO_NAME LIKE '%' || dloname_in || '%';
+    SELECT ID
+    INTO p_dlo_id
+    FROM SC.DLOS dlos
+    WHERE DLO_NAME LIKE '%' || p_dlooffice || '%';
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        p_dlo_id := NULL;
+    WHEN TOO_MANY_ROWS THEN
+        p_dlo_id := NULL;
+        -- Log an error if needed, as this indicates a data issue
+        log_error('DLO', 'Multiple records found for DLOOFFICE: ' || p_dlooffice);
 END;

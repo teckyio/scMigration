@@ -51,20 +51,15 @@ BEGIN
             APPROVED_CREATION_DATE,
             APPROVED_DELETE_DATE,
             APPROVED_REINSTATE_DATE,
-            APPROVED_AMEND_DATE,
-            JOB_NO,
-            CLEARANCE_NO,
-            AMEND_DATE,
-            CASE_FILE,
-            RECORD_DATE
-        FROM SDE_SQ.SQUATTER
-        WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTERS)
+            APPROVED_AMEND_DATE
+            
+        FROM SDE_SQ.SQUATTER WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SC.SQUATTERS)
     ) LOOP
         BEGIN
             generate_Formatted_GUID(v_guid);
             find_dlo_id(rec.DLOOFFICE, v_dlo_id);
             -- Insert into new table
-            INSERT INTO SQ.SQUATTERS (
+            INSERT INTO SC.SQUATTERS (
                 ID, 
                 OBJECT_ID, SQUATTER_ID, DIMENSIONS_L, DIMENSIONS_B, DIMENSIONS_H, 
                 SURVEY_LOCATION, DLO_ID, 
@@ -78,8 +73,8 @@ BEGIN
                 BOUNDARY_STATUS, UNITS, 
                 SERIAL_NO_EDIT, RECORD_DATE_EDIT, 
                 DELETE_REASON,
-                DELETE_DATE, REINSTATE_DATE, APPROVE_STATUS, VERSION, 
-                SURVERY_RECORD1982, APPROVED_CREATION_DATE, APPROVED_DELETE_DATE, 
+                DELETE_DATE, RE_INSTATE_DATE, APPROVE_STATUS, VERSION, 
+                SURVEY_RECORD1982, APPROVED_CREATION_DATE, APPROVED_DELETE_DATE, 
                 APPROVED_REINSTATE_DATE, APPROVED_AMEND_DATE,
                 JOB_NO,
                 CLEARANCE_NO,
@@ -100,7 +95,7 @@ BEGIN
                 rec.BOUNDARYSTATUS, rec.DIMENSIONUNIT, 
                 rec.SERIALNO_EDIT, rec.RECORDDATE_EDIT, 
                 rec.DELETE_REASON, 
-                rec.DELETE_DATE, rec.REIN_STATE_DATE, rec.APPROVE_STATUS, rec.VERSION, 
+                rec.DELETE_DATE, rec.REINSTATE_DATE, rec.APPROVE_STATUS, rec.VERSION, 
                 rec.SURVEYRECORD_1982, rec.APPROVED_CREATION_DATE, rec.APPROVED_DELETE_DATE, 
                 rec.APPROVED_REINSTATE_DATE, rec.APPROVED_AMEND_DATE,
                 rec.JOBNO,
@@ -110,9 +105,9 @@ BEGIN
                 rec.RECORDDATE
             );
         EXCEPTION
-            WHEN NO_DATA_FOUND (THEN
+            WHEN NO_DATA_FOUND THEN
                 v_error_message := 'DLO_NAME not found for OBJECTID: ' || TO_CHAR(rec.OBJECTID);
-                log_error'SQUATTERS', v_error_message);
+                log_error('SQUATTERS', v_error_message);
                 CONTINUE;
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
