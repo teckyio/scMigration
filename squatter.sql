@@ -103,11 +103,11 @@ BEGIN
                 rec.DELETE_DATE, rec.REIN_STATE_DATE, rec.APPROVE_STATUS, rec.VERSION, 
                 rec.SURVEYRECORD_1982, rec.APPROVED_CREATION_DATE, rec.APPROVED_DELETE_DATE, 
                 rec.APPROVED_REINSTATE_DATE, rec.APPROVED_AMEND_DATE,
-                JOB_NO,
-                CLEARANCE_NO,
-                AMEND_DATE,
-                CASE_FILE,
-                RECORD_DATE
+                rec.JOBNO,
+                rec.CLEARANCE_NO,
+                rec.AMEND_DATE,
+                rec.CASEFILE,
+                rec.RECORDDATE
             );
         EXCEPTION
             WHEN NO_DATA_FOUND (THEN
