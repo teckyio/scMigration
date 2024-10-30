@@ -37,10 +37,10 @@ BEGIN
         -- Attempt to find a single ID based on the DLO_NAME
         SELECT ID
         INTO p_dlo_id
-        FROM SC.DLOS dlos
-        WHERE DLO_NAME LIKE '%' || '/' || p_dlooffice || '%';
-            OR (p_dlooffice = 'N' AND DLO_NAME LIKE '%/ND%');
-            OR (p_dlooffice = 'HKWS' AND DLO_NAME LIKE '%/HKW&S%');
+        FROM SQ.DLOS dlos
+        WHERE DLO_NAME LIKE '%' || '/' || p_dlooffice || '%'
+            OR (p_dlooffice = 'N' AND DLO_NAME LIKE '%/ND%')
+            OR (p_dlooffice = 'HKWS' AND DLO_NAME LIKE '%/HKW&S%')
             OR (p_dlooffice = 'KT' AND DLO_NAME LIKE '%/TW&KT%');
 
     EXCEPTION
@@ -54,7 +54,7 @@ BEGIN
             -- Collect all IDs that match the condition to log them
             SELECT LISTAGG(ID, ', ') WITHIN GROUP (ORDER BY ID)
             INTO v_dlo_ids
-            FROM SC.DLOS
+            FROM SQ.DLOS
             WHERE DLO_NAME LIKE '%' || p_dlooffice || '%';
             
             -- Log an error with the concatenated list of IDs for debugging

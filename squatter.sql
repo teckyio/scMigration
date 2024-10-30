@@ -53,13 +53,13 @@ BEGIN
             APPROVED_REINSTATE_DATE,
             APPROVED_AMEND_DATE
             
-        FROM SDE_SQ.SQUATTER WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SC.SQUATTERS)
+        FROM SDE_SQ.SQUATTER WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTERS WHERE OBJECT_ID IS NOT NULL)
     ) LOOP
         BEGIN
             generate_Formatted_GUID(v_guid);
             find_dlo_id(rec.DLOOFFICE, v_dlo_id);
             -- Insert into new table
-            INSERT INTO SC.SQUATTERS (
+            INSERT INTO SQ.SQUATTERS (
                 ID, 
                 OBJECT_ID, SQUATTER_ID, DIMENSIONS_L, DIMENSIONS_B, DIMENSIONS_H, 
                 SURVEY_LOCATION, DLO_ID, 
@@ -89,11 +89,14 @@ BEGIN
                 rec.LOCATION, v_dlo_id, 
                 rec.FILENAME, rec.STATUS, SUBSTR(rec.CREATED_DATE, 1, 10), rec.SQUATTERDISTRICT, 
                 rec.PLANFILENAME, 
-                rec.CREATED_USER, SUBSTR(rec.LAST_EDITED_USER,1,10), rec.LAST_EDITED_DATE, 
+                rec.CREATED_USER, rec.LAST_EDITED_USER, SUBSTR(rec.LAST_EDITED_DATE,1,10), 
                 rec.CISSQUATTERID, 
                 rec.BOOKNO, rec.SERIALNO, rec.SURVEYNO, rec.FILEREF, rec.ISSUE, 
                 rec.SCOFFICE, rec.SURVEYNOPREFIX, 
-                rec.HASREMARK, rec.HOUSENO, rec.DISPLAYNAME, 
+                CASE
+                    WHEN rec.HASREMARK = 'true' then 1
+                    ELSE 0,
+                rec.HOUSENO, rec.DISPLAYNAME, 
                 rec.BOUNDARYSTATUS, rec.DIMENSIONUNIT, 
                 rec.SERIALNO_EDIT, rec.RECORDDATE_EDIT, 
                 rec.DELETE_REASON, 
