@@ -1,74 +1,78 @@
 DECLARE
     v_error_message VARCHAR2(4000);
-    v_max_sorting_index NUMBER;
+    v_count INTEGER;
+    v_max_sorting_index INTEGER;
 BEGIN
     FOR rec IN (
         SELECT
             OBJECTID,
             SQUATTERID,
-            SQUATTERUSEID,
-            SQUATTERUSE,
+            SQUATTERMATERIALID,
+            MATERIALS,
             GlobalID,
             created_user,
             created_date,
             last_edited_user,
             last_edited_date,
             VERSION
-        FROM OLDDB.SQUATTERUSE
+        FROM SDE_SQ.SQUATTERUSE
     ) LOOP
         BEGIN
-            -- Check if the use already exists in the new Use table
-            IF NOT EXISTS (SELECT 1 FROM NEWDB.USE WHERE NAME = rec.SQUATTERUSE) THEN
-                -- Get the current maximum sorting index
-                SELECT NVL(MAX(SORTING_INDEX), 0) INTO v_max_sorting_index FROM NEWDB.USE;
+            -- Check if the use already exists in the new Material table
+            SELECT COUNT(1) INTO v_count FROM SQ.USES WHERE NAME = rec.SQUATTERUSE;
 
-                -- Insert the new use with the next sorting index
-                INSERT INTO NEWDB.USE (NAME, DISPLAY_NAME, SORTING_INDEX)
-                VALUES (rec.SQUATTERUSE, rec.SQUATTERUSE, v_max_sorting_index + 1);
+            IF v_count = 0 THEN
+                -- Get the current max SORTING_INDEX
+                SELECT NVL(MAX(SORTING_INDEX), 0) + 1 INTO v_max_sorting_index FROM SQ.USES;
+                
+                INSERT INTO SQ.MATERIALS (NAME, DISPLAY_NAME, SORTING_INDEX)
+                VALUES (rec.SQUATTERUSE, rec.SQUATTERUSE, v_max_sorting_index);
             END IF;
         EXCEPTION
             WHEN OTHERS THEN
-                -- Capture the error and log it
                 v_error_message := SQLERRM;
-                log_error('SQUATTER_USE', v_error_message);
+                log_error('USE', v_error_message, rec.OBJECTID)
         END;
     END LOOP;
 END;
+
+-- Second block for SQUATTERMATERIAL_HIS
 
 DECLARE
     v_error_message VARCHAR2(4000);
-    v_max_sorting_index NUMBER;
+    v_count INTEGER;
+    v_max_sorting_index INTEGER;
 BEGIN
     FOR rec IN (
         SELECT
             OBJECTID,
             SQUATTERID,
-            SQUATTERUSEID,
-            SQUATTERUSE,
+            SQUATTERMATERIALID,
+            MATERIALS,
             GlobalID,
             created_user,
             created_date,
             last_edited_user,
             last_edited_date,
             VERSION
-        FROM OLDDB.SQUATTERUSE_HIS
+        FROM SDE_SQ.SQUATTERUSE_HIS
     ) LOOP
         BEGIN
-            -- Check if the use already exists in the new Use table
-            IF NOT EXISTS (SELECT 1 FROM NEWDB.USES WHERE NAME = rec.SQUATTERUSE) THEN
-                -- Get the current maximum sorting index
-                SELECT NVL(MAX(SORTING_INDEX), 0) INTO v_max_sorting_index FROM NEWDB.USE;
+            -- Check if the material already exists in the new Material table
+            SELECT COUNT(1) INTO v_count FROM SQ.USES WHERE NAME = rec.SQUATTERUSE;
 
-                -- Insert the new use with the next sorting index
-                INSERT INTO NEWDB.USES (NAME, DISPLAY_NAME, SORTING_INDEX)
-                VALUES (rec.SQUATTERUSE, rec.SQUATTERUSE, v_max_sorting_index + 1);
+            IF v_count = 0 THEN
+                -- Get the current max SORTING_INDEX
+                SELECT NVL(MAX(SORTING_INDEX), 0) + 1 INTO v_max_sorting_index FROM SQ.USES;
+
+                -- Insert into the MATERIAL table
+                INSERT INTO SQ.USES (NAME, DISPLAY_NAME, SORTING_INDEX)
+                VALUES (rec.SQUATTERUSE, rec.SQUATTERUSE, v_max_sorting_index);
             END IF;
         EXCEPTION
             WHEN OTHERS THEN
-                -- Capture the error and log it
                 v_error_message := SQLERRM;
-                log_error('SQUATTER_USE', v_error_message);
+                log_error('USE', v_error_message, rec.OBJECTID)
         END;
     END LOOP;
 END;
-/

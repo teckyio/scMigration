@@ -1,5 +1,7 @@
 DECLARE
     v_error_message VARCHAR2(4000);
+    v_count INTEGER;
+    v_max_sorting_index INTEGER;
 BEGIN
     FOR rec IN (
         SELECT
@@ -13,26 +15,33 @@ BEGIN
             last_edited_user,
             last_edited_date,
             VERSION
-        FROM OLDDB.SQUATTERMATERIAL
+        FROM SDE_SQ.SQUATTERMATERIAL
     ) LOOP
         BEGIN
             -- Check if the material already exists in the new Material table
-            IF NOT EXISTS (SELECT 1 FROM NEWDB.MATERIALS WHERE NAME = rec.MATERIALS) THEN
-                -- Insert into the MATERIAL table
-                INSERT INTO NEWDB.MATERIAL (NAME, DISPLAY_NAME, SORTING_INDEX)
-                VALUES (rec.MATERIALS, rec.MATERIALS, 1);
+            SELECT COUNT(1) INTO v_count FROM SQ.MATERIALS WHERE NAME = rec.MATERIALS;
+
+            IF v_count = 0 THEN
+                -- Get the current max SORTING_INDEX
+                SELECT NVL(MAX(SORTING_INDEX), 0) + 1 INTO v_max_sorting_index FROM SQ.MATERIALS;
+                
+                INSERT INTO SQ.MATERIALS (NAME, DISPLAY_NAME, SORTING_INDEX)
+                VALUES (rec.MATERIALS, rec.MATERIALS, v_max_sorting_index);
             END IF;
         EXCEPTION
             WHEN OTHERS THEN
-                -- Capture the error and log it
                 v_error_message := SQLERRM;
-                log_error('SQUATTER_MATERIAL', v_error_message);
+                log_error('USE', v_error_message, rec.OBJECTID)
         END;
     END LOOP;
 END;
+
+-- Second block for SQUATTERMATERIAL_HIS
 
 DECLARE
     v_error_message VARCHAR2(4000);
+    v_count INTEGER;
+    v_max_sorting_index INTEGER;
 BEGIN
     FOR rec IN (
         SELECT
@@ -46,21 +55,24 @@ BEGIN
             last_edited_user,
             last_edited_date,
             VERSION
-        FROM OLDDB.SQUATTERMATERIAL_HIS
+        FROM SDE_SQ.SQUATTERMATERIAL_HIS
     ) LOOP
         BEGIN
             -- Check if the material already exists in the new Material table
-            IF NOT EXISTS (SELECT 1 FROM NEWDB.MATERIALS WHERE NAME = rec.MATERIALS) THEN
+            SELECT COUNT(1) INTO v_count FROM SQ.MATERIALS WHERE NAME = rec.MATERIALS;
+
+            IF v_count = 0 THEN
+                -- Get the current max SORTING_INDEX
+                SELECT NVL(MAX(SORTING_INDEX), 0) + 1 INTO v_max_sorting_index FROM SQ.MATERIALS;
+
                 -- Insert into the MATERIAL table
-                INSERT INTO NEWDB.MATERIALS (NAME, DISPLAY_NAME, SORTING_INDEX)
-                VALUES (rec.MATERIALS, rec.MATERIALS, 1);
+                INSERT INTO SQ.MATERIALS (NAME, DISPLAY_NAME, SORTING_INDEX)
+                VALUES (rec.MATERIALS, rec.MATERIALS, v_max_sorting_index);
             END IF;
         EXCEPTION
             WHEN OTHERS THEN
-                -- Capture the error and log it
                 v_error_message := SQLERRM;
-                log_error('SQUATTER_MATERIAL', v_error_message);
+                log_error('USE', v_error_message, rec.OBJECTID)
         END;
     END LOOP;
 END;
-
