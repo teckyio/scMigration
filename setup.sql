@@ -3,6 +3,7 @@ CREATE OR UPDATE TABLE ERROR_LOG (
     TABLE_NAME   VARCHAR2(100),
     ERROR_MESSAGE VARCHAR2(4000),
     LOG_DATE     DATE,
+    OBJECTID VARCHAR2(100)
 );
 
 CREATE OR REPLACE PROCEDURE generate_Formatted_GUID(p_guid OUT VARCHAR2)
@@ -19,11 +20,12 @@ END;
 
 CREATE OR REPLACE PROCEDURE log_error (
     p_table_name VARCHAR2,
-    p_error_msg  VARCHAR2
+    p_error_msg  VARCHAR2,
+    p_object_id VARCHAR2
 ) IS
 BEGIN
-    INSERT INTO ERROR_LOG (TABLE_NAME, ERROR_MESSAGE, LOG_DATE)
-    VALUES (p_table_name, p_error_msg, SYSDATE);
+    INSERT INTO ERROR_LOG (TABLE_NAME, ERROR_MESSAGE, LOG_DATE, OBJECTID)
+    VALUES (p_table_name, p_error_msg, SYSDATE, p_object_id);
     COMMIT;
 END;
 

@@ -7,3 +7,4 @@
 + [X] +squatter.recorddate
 + [X] rename squatter.SURVERY_RECORD1982
 + [X] rename squatter.
++ [ ] squatter.status => nullable
