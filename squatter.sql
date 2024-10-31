@@ -82,12 +82,13 @@ BEGIN
                 AMEND_DATE,
                 CASE_FILE,
                 RECORD_DATE,
-                CREATED_AT
+                CREATED_AT,
+                UPDATED_AT
             ) VALUES (
                 v_guid,
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
                 rec.LOCATION, v_dlo_id, 
-                rec.FILENAME, rec.STATUS, SUBSTR(rec.CREATED_DATE, 1, 10), rec.SQUATTERDISTRICT, 
+                rec.FILENAME, rec.STATUS, SUBSTR(rec.CREATION_DATE, 1, 10), rec.SQUATTERDISTRICT, 
                 rec.PLANFILENAME, 
                 rec.CREATED_USER, rec.LAST_EDITED_USER, SUBSTR(rec.LAST_EDITED_DATE,1,10), 
                 rec.CISSQUATTERID, 
@@ -116,7 +117,8 @@ BEGIN
                 rec.AMEND_DATE,
                 rec.CASEFILE,
                 rec.RECORDDATE,
-                SYSDATE
+                rec.CREATED_DATE,
+                rec.LAST_EDITED_DATE
             );
         EXCEPTION
             WHEN NO_DATA_FOUND THEN
