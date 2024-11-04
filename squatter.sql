@@ -54,6 +54,7 @@ BEGIN
             APPROVED_AMEND_DATE
         FROM SDE_SQ.SQUATTER WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTERS WHERE OBJECT_ID IS NOT NULL)
     ) LOOP
+        BEGIN
             generate_Formatted_GUID(v_guid);
             find_dlo_id(rec.DLOOFFICE, v_dlo_id);
             -- Insert into new table
@@ -94,7 +95,8 @@ BEGIN
                 rec.SCOFFICE, rec.SURVEYNOPREFIX, 
                 CASE
                     WHEN rec.HASREMARK = 'true' then 1
-                    ELSE 0,
+                    ELSE 0
+                END,
                 rec.HOUSENO, rec.DISPLAYNAME, 
                 rec.BOUNDARYSTATUS, rec.DIMENSIONUNIT, 
                 rec.SERIALNO_EDIT, rec.RECORDDATE_EDIT, 
@@ -119,10 +121,6 @@ BEGIN
                 rec.LAST_EDITED_DATE
             );
         EXCEPTION
-            WHEN NO_DATA_FOUND THEN
-                v_error_message := 'DLO_NAME not found for OBJECTID: ' || TO_CHAR(rec.OBJECTID);
-                log_error('SQUATTERS', v_error_message);
-                CONTINUE;
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
                 log_error('SQUATTERS', v_error_message);
