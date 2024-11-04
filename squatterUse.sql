@@ -23,7 +23,7 @@ BEGIN
         BEGIN
             generate_Formatted_GUID(v_guid);
             -- Insert into the new SQUATTER_MATERIAL table
-            INSERT INTO SC.SQUATTER_USES (
+            INSERT INTO SQ.SQUATTER_USES (
                 ID,
                 SQUATTER_ID, 
                 USE_ID, 
