@@ -1,47 +1,46 @@
 DECLARE
     v_error_message VARCHAR2(4000);
+    v_guid VARCHAR2(36);
 BEGIN
     FOR rec IN (
         SELECT
-            OBJECTID,
-            SQUATTERID,
-            SQUATTERMATERIALID,
-            MATERIALS,
-            GlobalID,
-            created_user,
-            created_date,
-            last_edited_user,
-            last_edited_date,
-            VERSION
-        FROM OLDDB.SQUATTERMATERIAL
+            sm.OBJECTID,
+            sm.SQUATTERID,
+            sm.SQUATTERMATERIALID,
+            sm.MATERIALS,
+            sm.GlobalID,
+            sm.created_user,
+            sm.created_date,
+            sm.last_edited_user,
+            sm.last_edited_date,
+            sm.VERSION,
+            m.ID AS MATERIAL_ID,
+            s.ID AS SQUATTER_GUID
+        FROM SDE_SQ.SQUATTERMATERIAL sm
+        LEFT JOIN SQ.MATERIALS m ON m.NAME = sm.MATERIALS
+        LEFT JOIN SQ.SQUATTERS s ON s.SQUATTER_ID = sm.SQUATTERID
     ) LOOP
         BEGIN
-            -- Find the SquatterGuid from the new DB based on the SquatterId
-            DECLARE
-                v_squatter_guid VARCHAR2(100);
-            BEGIN
-                SELECT ID INTO v_squatter_guid FROM NEWDB.SQUATTERS WHERE SQUATTER_ID = rec.SQUATTERID;
-            EXCEPTION
-                WHEN NO_DATA_FOUND THEN
-                    v_squatter_guid := NULL;
-            END;
-
+            generate_Formatted_GUID(v_guid);
             -- Insert into the new SQUATTER_MATERIAL table
-            INSERT INTO NEWDB.SQUATTER_MATERIALS (
+            INSERT INTO SQ.SQUATTER_MATERIALS (
+                ID,
                 SQUATTER_ID, 
                 MATERIAL_ID, 
-                SQUATTER_GUID, VERSION
+                SQUATTER_GUID, 
+                SQUATTER_VERSION
             ) VALUES (
+                v_guid,
                 rec.SQUATTERID, 
-                (SELECT ID FROM NEWDB.MATERIALS WHERE NAME = rec.MATERIALS), 
-                v_squatter_guid, rec.VERSION
+                rec.MATERIAL_ID,
+                rec.SQUATTER_GUID,
+                rec.VERSION
             );
         EXCEPTION
             WHEN OTHERS THEN
                 -- Capture the error and log it
                 v_error_message := SQLERRM;
-                log_error('SQUATTER_MATERIAL', v_error_message);
+                log_error('SQUATTER_MATERIAL', v_error_message || ' | ObjectID: ' || TO_CHAR(rec.OBJECTID), rec.OBJECTID);
         END;
     END LOOP;
 END;
-/
