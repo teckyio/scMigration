@@ -33,7 +33,7 @@ BEGIN
         EXCEPTION
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
-                log_error('USE', v_error_message, rec.OBJECTID)
+                log_error('USE', v_error_message, rec.OBJECTID);
         END;
     END LOOP;
 END;
@@ -76,7 +76,7 @@ BEGIN
         EXCEPTION
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
-                log_error('USE', v_error_message, rec.OBJECTID)
+                log_error('USE', v_error_message, rec.OBJECTID);
         END;
     END LOOP;
 END;

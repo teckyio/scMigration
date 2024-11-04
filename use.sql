@@ -8,8 +8,8 @@ BEGIN
         SELECT
             OBJECTID,
             SQUATTERID,
-            SQUATTERMATERIALID,
-            MATERIALS,
+            SQUATTERUSEID,
+            SQUATTERUSE,
             GlobalID,
             created_user,
             created_date,
@@ -26,7 +26,7 @@ BEGIN
                 -- Get the current max SORTING_INDEX
                 SELECT NVL(MAX(SORTING_INDEX), 0) + 1 INTO v_max_sorting_index FROM SQ.USES;
                 generate_Formatted_GUID(v_guid);
-                INSERT INTO SQ.MATERIALS (ID, NAME, DISPLAY_NAME, SORTING_INDEX, CREATED_AT, UPDATED_AT)
+                INSERT INTO SQ.USES (ID, NAME, DISPLAY_NAME, SORTING_INDEX, CREATED_AT, UPDATED_AT)
                 VALUES (v_guid, rec.SQUATTERUSE, rec.SQUATTERUSE, v_max_sorting_index, SYSDATE, SYSDATE);
                 COMMIT;
             END IF;
@@ -50,8 +50,8 @@ BEGIN
         SELECT
             OBJECTID,
             SQUATTERID,
-            SQUATTERMATERIALID,
-            MATERIALS,
+            SQUATTERUSEID,
+            SQUATTERUSE,
             GlobalID,
             created_user,
             created_date,

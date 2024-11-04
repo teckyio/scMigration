@@ -6,7 +6,7 @@ DECLARE
 BEGIN
     FOR rec IN (
         SELECT
-            OBJECTID,
+        OBJECTID,
             SQUATTERID,
             DIMENSION_L,
             DIMENSION_B,
@@ -52,10 +52,8 @@ BEGIN
             APPROVED_DELETE_DATE,
             APPROVED_REINSTATE_DATE,
             APPROVED_AMEND_DATE
-            
         FROM SDE_SQ.SQUATTER WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTERS WHERE OBJECT_ID IS NOT NULL)
     ) LOOP
-        BEGIN
             generate_Formatted_GUID(v_guid);
             find_dlo_id(rec.DLOOFFICE, v_dlo_id);
             -- Insert into new table
