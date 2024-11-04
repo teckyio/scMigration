@@ -27,6 +27,7 @@ BEGIN
                 
                 INSERT INTO SQ.MATERIALS (NAME, DISPLAY_NAME, SORTING_INDEX)
                 VALUES (rec.SQUATTERUSE, rec.SQUATTERUSE, v_max_sorting_index);
+                COMMIT;
             END IF;
         EXCEPTION
             WHEN OTHERS THEN
@@ -68,6 +69,7 @@ BEGIN
                 -- Insert into the MATERIAL table
                 INSERT INTO SQ.USES (NAME, DISPLAY_NAME, SORTING_INDEX)
                 VALUES (rec.SQUATTERUSE, rec.SQUATTERUSE, v_max_sorting_index);
+                COMMIT;
             END IF;
         EXCEPTION
             WHEN OTHERS THEN
