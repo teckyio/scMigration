@@ -41,7 +41,7 @@ BEGIN
         INTO p_dlo_id
         FROM SQ.DLOS dlos
         WHERE DLO_NAME LIKE '%' || '/' || p_dlooffice || '%'
-            OR (p_dlooffice = 'N' AND DLO_NAME LIKE '%/ND%')
+            OR (p_dlooffice = 'ND' AND DLO_NAME LIKE '%/N%')
             OR (p_dlooffice = 'HKWS' AND DLO_NAME LIKE '%/HKW&S%')
             OR (p_dlooffice = 'KT' AND DLO_NAME LIKE '%/TW&KT%');
 
