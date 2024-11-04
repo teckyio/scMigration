@@ -26,8 +26,8 @@ BEGIN
                 -- Get the current max SORTING_INDEX
                 SELECT NVL(MAX(SORTING_INDEX), 0) + 1 INTO v_max_sorting_index FROM SQ.MATERIALS;
                 generate_Formatted_GUID(v_guid)
-                INSERT INTO SQ.MATERIALS (ID, NAME, DISPLAY_NAME, SORTING_INDEX)
-                VALUES (v_guid, rec.MATERIALS, rec.MATERIALS, v_max_sorting_index);
+                INSERT INTO SQ.MATERIALS (ID, NAME, DISPLAY_NAME, SORTING_INDEX, CREATED_AT, UPDATED_AT)
+                VALUES (v_guid, rec.MATERIALS, rec.MATERIALS, v_max_sorting_index, SYSDATE, SYSDATE);
                 COMMIT;
             END IF;
         EXCEPTION
@@ -69,8 +69,8 @@ BEGIN
                 SELECT NVL(MAX(SORTING_INDEX), 0) + 1 INTO v_max_sorting_index FROM SQ.MATERIALS;
 
                 -- Insert into the MATERIAL table
-                INSERT INTO SQ.MATERIALS (ID, NAME, DISPLAY_NAME, SORTING_INDEX)
-                VALUES (v_guid, rec.MATERIALS, rec.MATERIALS, v_max_sorting_index);
+                INSERT INTO SQ.MATERIALS (ID, NAME, DISPLAY_NAME, SORTING_INDEX, CREATED_AT, UPDATED_AT)
+                VALUES (v_guid, rec.MATERIALS, rec.MATERIALS, v_max_sorting_index,SYSDATE, SYSDATE);
                 COMMIT;
             END IF;
         EXCEPTION
