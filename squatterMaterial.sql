@@ -20,15 +20,15 @@ BEGIN
         FROM SDE_SQ.SQUATTERMATERIAL sm
         LEFT JOIN SQ.MATERIALS m ON sm.MATERIALS = m.NAME 
         LEFT JOIN SQ.SQUATTERS s ON sm.SQUATTERID = s.SQUATTER_ID AND sm.VERSION = s.VERSION
-        LEFT JOIN SQ.SQUATTER_PEND sp ON sm.SQUATTERID = sp.SQUATTER_ID AND sm.VERSION = sp.VERSION
-        WHERE sm.OBJECTID NOT IN (SELECT new_sm.OBJECT_ID FROM SQ.SQUATTER_MATERIALS new_sm WHERE new_sm.OBJECT_ID IS NOT NULL)
+        LEFT JOIN SQ.SQUATTER_PENDS sp ON sm.SQUATTERID = sp.SQUATTER_ID AND sm.VERSION = sp.VERSION
+        -- WHERE sm.OBJECTID NOT IN (SELECT new_sm.OBJECT_ID FROM SQ.SQUATTER_MATERIALS new_sm WHERE new_sm.OBJECT_ID IS NOT NULL)
     ) LOOP
         BEGIN
             generate_Formatted_GUID(v_guid);
             IF rec.SQUATTER_GUID IS NULL AND rec.SQUATTER_PEND_GUID IS NULL THEN
                 v_error_message := 'Missing mandatory join data: SQUATTER_PEND_GUID AND SQUATTER_GUID is NULL!!';
                 log_error('SQUATTER_MATERIAL', v_error_message, rec.OBJECTID);
-            ELSEIF rec.SQUATTER_GUID IS NOT NULL AND rec.SQUATTER_PEND_GUID IS NULL THEN
+            ELSIF rec.SQUATTER_GUID IS NOT NULL AND rec.SQUATTER_PEND_GUID IS NULL THEN
                 INSERT INTO SQ.SQUATTER_MATERIALS (
                     ID,
                     SQUATTER_ID, 
@@ -46,7 +46,7 @@ BEGIN
                     rec.created_date,
                     rec.last_edited_date
                 );
-            ELSEIF  rec.SQUATTER_PEND_GUID IS NOT NULL AND rec.SQUATTER_GUID IS NULL THEN
+            ELSIF  rec.SQUATTER_PEND_GUID IS NOT NULL AND rec.SQUATTER_GUID IS NULL THEN
                 INSERT INTO SQ.SQUATTER_MATERIALS (
                     ID,
                     SQUATTER_ID, 
@@ -67,7 +67,7 @@ BEGIN
             ELSE
                 v_error_message := 'Missing mandatory join data: SQUATTER_PEND_GUID AND SQUATTER_GUID MATCH WITH A SQUATTERMATIRAL!!';
                 log_error('SQUATTER_MATERIAL', v_error_message, rec.OBJECTID);
-            END IF
+            END IF;
         EXCEPTION
             WHEN OTHERS THEN
                 -- Capture the error and log it
