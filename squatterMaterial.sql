@@ -28,13 +28,17 @@ BEGIN
                 SQUATTER_ID, 
                 MATERIAL_ID, 
                 SQUATTER_GUID, 
-                SQUATTER_VERSION
+                SQUATTER_VERSION,
+                CREATED_AT,
+                UPDATED_AT
             ) VALUES (
                 v_guid,
                 rec.SQUATTERID, 
                 rec.MATERIAL_ID,
                 rec.SQUATTER_GUID,
-                rec.VERSION
+                rec.VERSION,
+                rec.created_date,
+                rec.last_edited_date
             );
         EXCEPTION
             WHEN OTHERS THEN
