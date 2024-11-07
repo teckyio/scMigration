@@ -79,14 +79,15 @@ BEGIN
                 DELETE_DATE,
                 RE_INSTATE_DATE, APPROVE_STATUS, VERSION, 
                 SURVEY_RECORD1982, APPROVED_CREATION_DATE, APPROVED_DELETE_DATE, 
-                APPROVED_REINSTATE_DATE, APPROVED_AMEND_DATE,
+                APPROVED_REINSTATE_DATE, APPROVED_AMENDMENT_DATE,
                 JOB_NO,
                 CLEARANCE_NO,
                 AMEND_DATE,
                 CASE_FILE,
                 RECORD_DATE,
                 CREATED_AT,
-                UPDATED_AT
+                UPDATED_AT,
+                LAST_EDITED_DATE
             ) VALUES (
                 (SELECT ID FROM SQ.SQUATTERS new_sq WHERE new_sq.SQUATTER_GUID = rec.SQUATTERID AND new_sq.DLO_ID = v_dlo_id), 
                 v_guid,
@@ -114,7 +115,7 @@ BEGIN
                     WHEN rec.REINSTATE_DATE IS NOT NULL THEN SUBSTR(rec.REINSTATE_DATE, 1, 10) 
                     ELSE NULL 
                 END, 
-                rec.APPROVE_STATUS, rec.VERSION, 
+                rec.D_APPROVE_STATUS, rec.VERSION, 
                 rec.SURVEYRECORD_1982, rec.APPROVED_CREATION_DATE, rec.APPROVED_DELETE_DATE, 
                 rec.APPROVED_REINSTATE_DATE, rec.APPROVED_AMEND_DATE,
                 rec.JOBNO,
@@ -123,6 +124,7 @@ BEGIN
                 rec.CASEFILE,
                 rec.RECORDDATE,
                 rec.CREATED_DATE,
+                rec.LAST_EDITED_DATE
                 rec.LAST_EDITED_DATE
             );
         EXCEPTION

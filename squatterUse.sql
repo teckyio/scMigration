@@ -7,7 +7,7 @@ BEGIN
             sm.OBJECTID,
             sm.SQUATTERID,
             sm.SQUATTERUSEID,
-            sm.USE,
+            sm.SQUATTERUSE,
             sm.GlobalID,
             sm.created_user,
             sm.created_date,
@@ -17,8 +17,8 @@ BEGIN
             m.ID AS USE_ID,
             s.ID AS SQUATTER_GUID,
             sp.ID AS SQUATTER_PEND_GUID
-        FROM SDE_SQ.SQUATTERMATERIAL sm
-        LEFT JOIN SQ.MATERIALS m ON sm.MATERIALS = m.NAME 
+        FROM SDE_SQ.SQUATTERUSE sm
+        LEFT JOIN SQ.USES m ON sm.SQUATTERUSE = m.NAME 
         LEFT JOIN SQ.SQUATTERS s ON sm.SQUATTERID = s.SQUATTER_ID AND sm.VERSION = s.VERSION
         LEFT JOIN SQ.SQUATTER_PENDS sp ON sm.SQUATTERID = sp.SQUATTER_ID AND sm.VERSION = sp.VERSION
         -- WHERE sm.OBJECTID NOT IN (SELECT new_sm.OBJECT_ID FROM SQ.SQUATTER_MATERIALS new_sm WHERE new_sm.OBJECT_ID IS NOT NULL)
