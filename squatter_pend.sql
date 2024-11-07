@@ -6,54 +6,56 @@ DECLARE
 BEGIN
     FOR rec IN (
         SELECT
-            OBJECTID,
-            SQUATTERID,
-            DIMENSION_L,
-            DIMENSION_B,
-            DIMENSION_H,
-            LOCATION,
-            DLOOFFICE,
-            FILENAME,
-            STATUS,
-            RECORDDATE,
-            SQUATTERDISTRICT,
-            PLANFILENAME,
-            CREATED_USER,
-            CREATED_DATE,
-            LAST_EDITED_USER,
-            LAST_EDITED_DATE,
-            CISSQUATTERID,
-            BOOKNO,
-            SERIALNO,
-            SURVEYNO,
-            FILEREF,
-            ISSUE,
-            SCOFFICE,
-            SURVEYNOPREFIX,
-            HASREMARK,
-            HOUSENO,
-            DISPLAYNAME,
-            BOUNDARYSTATUS,
-            DIMENSIONUNIT,
-            SERIALNO_EDIT,
-            RECORDDATE_EDIT,
-            JOBNO,
-            CREATION_DATE,
-            CASEFILE,
-            AMEND_DATE,
-            DELETE_REASON,
-            CLEARANCE_NO,
-            DELETE_DATE,
-            REINSTATE_DATE,
-            APPROVE_STATUS,
-            VERSION,
-            SURVEYRECORD_1982,
-            APPROVED_CREATION_DATE,
-            APPROVED_DELETE_DATE,
-            APPROVED_REINSTATE_DATE,
-            APPROVED_AMEND_DATE
-            
-        FROM SDE_SQ.SQUATTER_TEMP WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTER_PENDS WHERE OBJECT_ID IS NOT NULL)
+            st.OBJECTID,
+            st.SQUATTERID,
+            st.DIMENSION_L,
+            st.DIMENSION_B,
+            st.DIMENSION_H,
+            st.LOCATION,
+            st.DLOOFFICE,
+            st.FILENAME,
+            st.STATUS,
+            st.RECORDDATE,
+            st.SQUATTERDISTRICT,
+            st.PLANFILENAME,
+            st.CREATED_USER,
+            st.CREATED_DATE,
+            st.LAST_EDITED_USER,
+            st.LAST_EDITED_DATE,
+            st.CISSQUATTERID,
+            st.BOOKNO,
+            st.SERIALNO,
+            st.SURVEYNO,
+            st.FILEREF,
+            st.ISSUE,
+            st.SCOFFICE,
+            st.SURVEYNOPREFIX,
+            st.HASREMARK,
+            st.HOUSENO,
+            st.DISPLAYNAME,
+            st.BOUNDARYSTATUS,
+            st.DIMENSIONUNIT,
+            st.SERIALNO_EDIT,
+            st.RECORDDATE_EDIT,
+            st.JOBNO,
+            st.CREATION_DATE,
+            st.CASEFILE,
+            st.AMEND_DATE,
+            st.DELETE_REASON,
+            st.CLEARANCE_NO,
+            st.DELETE_DATE,
+            st.REINSTATE_DATE,
+            st.APPROVE_STATUS,
+            st.VERSION,
+            st.SURVEYRECORD_1982,
+            st.APPROVED_CREATION_DATE,
+            st.APPROVED_DELETE_DATE,
+            st.APPROVED_REINSTATE_DATE,
+            st.APPROVED_AMEND_DATE,
+            s.ID AS SQUATTER_GUID
+        FROM SDE_SQ.SQUATTER_TEMP st
+        LEFT JOIN SQ.SQUATTERS s ON st.SQUATTERID = s.SQUATTER_ID 
+        WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTER_PENDS WHERE OBJECT_ID IS NOT NULL)
     ) LOOP
         BEGIN
             generate_Formatted_GUID(v_guid);
@@ -61,6 +63,7 @@ BEGIN
             -- Insert into new table
             INSERT INTO SQ.SQUATTER_PENDS (
                 ID, 
+                SQUATTER_GUID,
                 OBJECT_ID, SQUATTER_ID, DIMENSIONS_L, DIMENSIONS_B, DIMENSIONS_H, 
                 SURVEY_LOCATION, DLO_ID, 
                 FILE_NAME, STATUS, CREATED_DATE, DISTRICT, 
@@ -86,6 +89,7 @@ BEGIN
                 UPDATED_AT
             ) VALUES (
                 v_guid,
+                rec.SQUATTER_GUID
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
                 rec.LOCATION, v_dlo_id, 
                 rec.FILENAME, rec.STATUS, SUBSTR(rec.CREATION_DATE, 1, 10), rec.SQUATTERDISTRICT, 
@@ -96,7 +100,8 @@ BEGIN
                 rec.SCOFFICE, rec.SURVEYNOPREFIX, 
                 CASE
                     WHEN rec.HASREMARK = 'true' then 1
-                    ELSE 0,
+                    ELSE 0
+                END,
                 rec.HOUSENO, rec.DISPLAYNAME, 
                 rec.BOUNDARYSTATUS, rec.DIMENSIONUNIT, 
                 rec.SERIALNO_EDIT, rec.RECORDDATE_EDIT, 
@@ -121,10 +126,6 @@ BEGIN
                 rec.LAST_EDITED_DATE
             );
         EXCEPTION
-            WHEN NO_DATA_FOUND THEN
-                v_error_message := 'DLO_NAME not found for OBJECTID: ' || TO_CHAR(rec.OBJECTID);
-                log_error('SQUATTERS', v_error_message);
-                CONTINUE;
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
                 log_error('SQUATTERS', v_error_message);
