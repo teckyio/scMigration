@@ -54,7 +54,7 @@ BEGIN
             sh.APPROVED_AMEND_DATE,
             s.ID AS SQUATTER_GUID
         FROM SDE_SQ.SQUATTER_HIS sh 
-        LEFT JOIN SQ.SQUATTERS s ON sh.SQUATTERID = s.SQUATTER_ID AND sh.VERSION = s.VERSION
+        LEFT JOIN SQ.SQUATTERS s ON sh.SQUATTERID = s.SQUATTER_ID 
         WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTER_HISTORIES WHERE OBJECT_ID IS NOT NULL)
     ) LOOP
         BEGIN
@@ -88,7 +88,7 @@ BEGIN
                 CREATED_AT,
                 UPDATED_AT
             ) VALUES (
-                (SELECT ID FROM SQ.SQUATTERS new_sq WHERE new_sq.SQUATTER_GUID = rec.SQUATTERID AND new_sq.DLO_ID = v_dlo_id), 
+                rec.SQUATTER_GUID, 
                 v_guid,
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
                 rec.LOCATION, v_dlo_id, 
