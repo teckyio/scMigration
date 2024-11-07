@@ -83,8 +83,7 @@ BEGIN
                 CASE_FILE,
                 RECORD_DATE,
                 CREATED_AT,
-                UPDATED_AT,
-                LAST_EDITED_DATE
+                UPDATED_AT
             ) VALUES (
                 v_guid,
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
