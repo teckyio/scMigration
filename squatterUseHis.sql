@@ -7,40 +7,50 @@ BEGIN
             suh.OBJECTID,
             suh.SQUATTERID,
             suh.SQUATTERUSEID,
-            suh.SQUATTERUSE,
+            suh.MATERIALS,
             suh.GlobalID,
             suh.created_user,
             suh.created_date,
             suh.last_edited_user,
             suh.last_edited_date,
             suh.VERSION,
-            u.ID AS USE_ID,
-            s.ID AS SQUATTER_GUID
-        FROM SDE_SQ.SQUATTERUSE_HIS suh
-        LEFT JOIN SC.USES u ON u.NAME = suh.SQUATTERUSE
-        LEFT JOIN SC.SQUATTER_HISTORIES s ON s.SQUATTER_ID = suh.SQUATTERID
+            m.ID AS USE_ID,
+            s.ID AS SQUATTER_HIS_GUID,
+        FROM SDE_SQ.SQUATTERUSE_HIS su
+        LEFT JOIN SQ.MATERIALS m ON suh.MATERIALS = m.NAME 
+        LEFT JOIN SQ.SQUATTER_HISTORIES s ON suh.SQUATTERID = s.SQUATTER_ID AND suh.VERSION = s.VERSION
+        -- WHERE suh.OBJECTID NOT IN (SELECT new_suh.OBJECT_ID FROM SQ.SQUATTER_MATERIAL_HIS new_sm WHERE new_suh.OBJECT_ID IS NOT NULL)
     ) LOOP
         BEGIN
             generate_Formatted_GUID(v_guid);
-            -- Insert into the new SQUATTER_MATERIAL table
-            INSERT INTO SC.SQUATTER_USES (
-                ID,
-                SQUATTER_ID, 
-                USE_ID, 
-                SQUATTER_GUID, 
-                SQUATTER_VERSION
-            ) VALUES (
-                v_guid,
-                rec.SQUATTERID, 
-                rec.USE_ID,
-                rec.SQUATTER_GUID,
-                rec.VERSION
-            );
+            IF rec.SQUATTER_HIS_GUID IS NULL  THEN
+                v_error_message := 'Missing mandatory join data: SQUATTER_HIS_GUID is NULL!!';
+                log_error('SQUATTER_USE_HIS', v_error_message, rec.OBJECTID);
+            ELSE 
+                INSERT INTO SQ.SQUATTER_USE_HIS (
+                    ID,
+                    SQUATTER_ID, 
+                    USE_ID, 
+                    SQUATTER_GUID, 
+                    SQUATTER_VERSION,
+                    CREATED_AT,
+                    UPDATED_AT
+                ) VALUES (
+                    v_guid,
+                    rec.SQUATTERID, 
+                    rec.USE_ID,
+                    rec.SQUATTER_HIS_GUID,
+                    rec.VERSION,
+                    rec.created_date,
+                    rec.last_edited_date
+                );
+
+            END IF;
         EXCEPTION
             WHEN OTHERS THEN
                 -- Capture the error and log it
                 v_error_message := SQLERRM;
-                log_error('SQUATTER_USES_HIS', v_error_message || ' | ObjectID: ' || TO_CHAR(rec.OBJECTID), rec.OBJECTID);
+                log_error('SQUATTER_USE_HIS', v_error_message, rec.OBJECTID);
         END;
     END LOOP;
 END;
