@@ -73,16 +73,18 @@ BEGIN
                 SERIAL_NO_EDIT, RECORD_DATE_EDIT, 
                 DELETE_REASON,
                 DELETE_DATE, 
-                RE_INSTATE_DATE, APPROVE_STATUS, VERSION, 
+                RE_INSTATE_DATE, 
+                VERSION, 
                 SURVEY_RECORD1982, APPROVED_CREATION_DATE, APPROVED_DELETE_DATE, 
-                APPROVED_REINSTATE_DATE, APPROVED_AMEND_DATE,
+                APPROVED_REINSTATE_DATE, APPROVED_AMENDMENT_DATE,
                 JOB_NO,
                 CLEARANCE_NO,
                 AMEND_DATE,
                 CASE_FILE,
                 RECORD_DATE,
                 CREATED_AT,
-                UPDATED_AT
+                UPDATED_AT,
+                LAST_EDITED_DATE
             ) VALUES (
                 v_guid,
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
@@ -109,7 +111,7 @@ BEGIN
                     WHEN rec.REINSTATE_DATE IS NOT NULL THEN SUBSTR(rec.REINSTATE_DATE, 1, 10) 
                     ELSE NULL 
                 END, 
-                rec.APPROVE_STATUS, rec.VERSION, 
+                rec.VERSION, 
                 rec.SURVEYRECORD_1982, rec.APPROVED_CREATION_DATE, rec.APPROVED_DELETE_DATE, 
                 rec.APPROVED_REINSTATE_DATE, rec.APPROVED_AMEND_DATE,
                 rec.JOBNO,
