@@ -52,13 +52,13 @@ BEGIN
             APPROVED_DELETE_DATE,
             APPROVED_REINSTATE_DATE,
             APPROVED_AMEND_DATE
-        FROM SDE_SQ.SQUATTER_HIS WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTER_HIS WHERE OBJECT_ID IS NOT NULL)
+        FROM SDE_SQ.SQUATTER_HIS WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTER_HISTORIES WHERE OBJECT_ID IS NOT NULL)
     ) LOOP
         BEGIN
             generate_Formatted_GUID(v_guid);
             find_dlo_id(rec.DLOOFFICE, v_dlo_id);
             -- Insert into new table
-            INSERT INTO SQ.SQUATTER_HIS (
+            INSERT INTO SQ.SQUATTER_HISTORIES (
                 SQUATTER_GUID,
                 ID, 
                 OBJECT_ID, SQUATTER_ID, DIMENSIONS_L, DIMENSIONS_B, DIMENSIONS_H, 
@@ -85,7 +85,7 @@ BEGIN
                 CREATED_AT,
                 UPDATED_AT
             ) VALUES (
-                SELECT ID FROM SQ.SQUATTERS new_sq WHERE new_sq.SQUATTER_GUID = rec.SQUATTERID AND new_sq.DLO = v_dlo_id, 
+                (SELECT ID FROM SQ.SQUATTERS new_sq WHERE new_sq.SQUATTER_GUID = rec.SQUATTERID AND new_sq.DLO_ID = v_dlo_id), 
                 v_guid,
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
                 rec.LOCATION, v_dlo_id, 
