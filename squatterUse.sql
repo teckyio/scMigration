@@ -29,7 +29,7 @@ BEGIN
                 v_error_message := 'Missing mandatory join data: SQUATTER_PEND_GUID AND SQUATTER_GUID is NULL!!';
                 log_error('SQUATTER_USE', v_error_message, rec.OBJECTID);
             ELSIF rec.SQUATTER_GUID IS NOT NULL AND rec.SQUATTER_PEND_GUID IS NULL THEN
-                INSERT INTO SQ.SQUATTER_MATERIALS (
+                INSERT INTO SQ.SQUATTER_USES (
                     ID,
                     SQUATTER_ID, 
                     USE_ID, 
@@ -47,10 +47,10 @@ BEGIN
                     rec.last_edited_date
                 );
             ELSIF  rec.SQUATTER_PEND_GUID IS NOT NULL AND rec.SQUATTER_GUID IS NULL THEN
-                INSERT INTO SQ.SQUATTER_MATERIALS (
+                INSERT INTO SQ.SQUATTER_USES (
                     ID,
                     SQUATTER_ID, 
-                    MATERIAL_ID, 
+                    USE_ID, 
                     SQUATTER_PEND_GUID, 
                     SQUATTER_VERSION,
                     CREATED_AT,
@@ -66,13 +66,13 @@ BEGIN
                 );
             ELSE
                 v_error_message := 'Missing mandatory join data: SQUATTER_PEND_GUID AND SQUATTER_GUID MATCH WITH A SQUATTERMATIRAL!!';
-                log_error('SQUATTER_MATERIAL', v_error_message, rec.OBJECTID);
+                log_error('SQUATTER_USE', v_error_message, rec.OBJECTID);
             END IF;
         EXCEPTION
             WHEN OTHERS THEN
                 -- Capture the error and log it
                 v_error_message := SQLERRM;
-                log_error('SQUATTER_MATERIAL', v_error_message, rec.OBJECTID);
+                log_error('SQUATTER_USE', v_error_message, rec.OBJECTID);
         END;
     END LOOP;
 END;
