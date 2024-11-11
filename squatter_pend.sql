@@ -89,7 +89,7 @@ BEGIN
                 UPDATED_AT
             ) VALUES (
                 v_guid,
-                rec.SQUATTER_GUID
+                rec.SQUATTER_GUID,
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
                 rec.LOCATION, v_dlo_id, 
                 rec.FILENAME, rec.STATUS, SUBSTR(rec.CREATION_DATE, 1, 10), rec.SQUATTERDISTRICT, 

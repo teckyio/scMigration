@@ -15,9 +15,9 @@ BEGIN
             suh.last_edited_date,
             suh.VERSION,
             m.ID AS USE_ID,
-            s.ID AS SQUATTER_HIS_GUID,
+            s.ID AS SQUATTER_HIS_GUID
         FROM SDE_SQ.SQUATTERUSE_HIS su
-        LEFT JOIN SQ.USES m ON suh.USE = m.NAME 
+        LEFT JOIN SQ.USES m ON suh.SQUATTERUSE = m.NAME 
         LEFT JOIN SQ.SQUATTER_HISTORIES s ON suh.SQUATTERID = s.SQUATTER_ID AND suh.VERSION = s.VERSION
         -- WHERE suh.OBJECTID NOT IN (SELECT new_suh.OBJECT_ID FROM SQ.SQUATTER_MATERIAL_HIS new_sm WHERE new_suh.OBJECT_ID IS NOT NULL)
     ) LOOP
@@ -31,10 +31,11 @@ BEGIN
                     ID,
                     SQUATTER_ID, 
                     USE_ID, 
-                    SQUATTER_GUID, 
+                    SQUATTER_HISTORY_ID, 
                     SQUATTER_VERSION,
                     CREATED_AT,
-                    UPDATED_AT
+                    UPDATED_AT,
+                    OBJECT_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -42,7 +43,8 @@ BEGIN
                     rec.SQUATTER_HIS_GUID,
                     rec.VERSION,
                     rec.created_date,
-                    rec.last_edited_date
+                    rec.last_edited_date,
+                    rec.OBJECTID
                 );
 
             END IF;

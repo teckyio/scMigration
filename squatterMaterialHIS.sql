@@ -15,7 +15,7 @@ BEGIN
             sm.last_edited_date,
             sm.VERSION,
             m.ID AS MATERIAL_ID,
-            s.ID AS SQUATTER_HIS_GUID,
+            s.ID AS SQUATTER_HIS_GUID
         FROM SDE_SQ.SQUATTERMATERIAL_HIS sm
         LEFT JOIN SQ.MATERIALS m ON sm.MATERIALS = m.NAME 
         LEFT JOIN SQ.SQUATTER_HISTORIES s ON sm.SQUATTERID = s.SQUATTER_ID AND sm.VERSION = s.VERSION
@@ -34,7 +34,8 @@ BEGIN
                     SQUATTER_GUID, 
                     SQUATTER_VERSION,
                     CREATED_AT,
-                    UPDATED_AT
+                    UPDATED_AT,
+                    OBJECT_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -42,7 +43,8 @@ BEGIN
                     rec.SQUATTER_HIS_GUID,
                     rec.VERSION,
                     rec.created_date,
-                    rec.last_edited_date
+                    rec.last_edited_date,
+                    rec.OBJECT_ID
                 );
 
             END IF;
