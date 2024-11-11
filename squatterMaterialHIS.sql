@@ -52,7 +52,7 @@ BEGIN
             WHEN OTHERS THEN
                 -- Capture the error and log it
                 v_error_message := SQLERRM;
-                log_error('SQUATTER_MATERIAL-HIS', v_error_message, rec.OBJECTID);
+                log_error('SQUATTER_MATERIAL_HIS', v_error_message, rec.OBJECTID);
         END;
     END LOOP;
 END;
