@@ -24,18 +24,39 @@ BEGIN
         BEGIN
             generate_Formatted_GUID(v_guid);
             IF rec.SQUATTER_HIS_GUID IS NULL  THEN
-                v_error_message := 'Missing mandatory join data: SQUATTER_HIS_GUID is NULL!!';
-                log_error('SQUATTER_MATERIAL_HIS', v_error_message, rec.OBJECTID);
+                INSERT INTO SQ.SQUATTER_MATERIAL_HIS (
+                    ID,
+                    SQUATTER_ID, 
+                    MATERIAL_ID, 
+                    SQUATTER_VERSION,
+                    CREATED_AT,
+                    UPDATED_AT,
+                    OBJECT_ID,
+                    GLOBAL_ID,
+                    D_SQUATTER_MATERIAL_ID
+                ) VALUES (
+                    v_guid,
+                    rec.SQUATTERID, 
+                    rec.MATERIAL_ID,
+                    rec.VERSION,
+                    rec.created_date,
+                    rec.last_edited_date,
+                    rec.OBJECT_ID,
+                    rec.GLOBALID,
+                    rec.SQUATTERMATERIALID
+                );
             ELSE 
                 INSERT INTO SQ.SQUATTER_MATERIAL_HIS (
                     ID,
                     SQUATTER_ID, 
                     MATERIAL_ID, 
-                    SQUATTER_GUID, 
+                    SQUATTER_HISTORY_ID, 
                     SQUATTER_VERSION,
                     CREATED_AT,
                     UPDATED_AT,
-                    OBJECT_ID
+                    OBJECT_ID,
+                    GLOBAL_ID,
+                    D_SQUATTER_MATERIAL_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -44,7 +65,9 @@ BEGIN
                     rec.VERSION,
                     rec.created_date,
                     rec.last_edited_date,
-                    rec.OBJECT_ID
+                    rec.OBJECT_ID,
+                    rec.GLOBALID,
+                    rec.SQUATTERMATERIALID
                 );
 
             END IF;

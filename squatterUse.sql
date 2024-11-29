@@ -26,8 +26,25 @@ BEGIN
         BEGIN
             generate_Formatted_GUID(v_guid);
             IF rec.SQUATTER_GUID IS NULL AND rec.SQUATTER_PEND_GUID IS NULL THEN
-                v_error_message := 'Missing mandatory join data: SQUATTER_PEND_GUID AND SQUATTER_GUID is NULL!!';
-                log_error('SQUATTER_USE', v_error_message, rec.OBJECTID);
+                INSERT INTO SQ.SQUATTER_USES (
+                    ID,
+                    SQUATTER_ID, 
+                    USE_ID, 
+                    SQUATTER_VERSION,
+                    CREATED_AT,
+                    UPDATED_AT,
+                    GLOBAL_ID,
+                    D_SQUATTER_USE_ID
+                ) VALUES (
+                    v_guid,
+                    rec.SQUATTERID, 
+                    rec.USE_ID,
+                    rec.VERSION,
+                    rec.created_date,
+                    rec.last_edited_date,
+                    rec.GLOBALID,
+                    rec.SQUATTERUSEID
+                );
             ELSIF rec.SQUATTER_GUID IS NOT NULL AND rec.SQUATTER_PEND_GUID IS NULL THEN
                 INSERT INTO SQ.SQUATTER_USES (
                     ID,
@@ -36,7 +53,9 @@ BEGIN
                     SQUATTER_GUID, 
                     SQUATTER_VERSION,
                     CREATED_AT,
-                    UPDATED_AT
+                    UPDATED_AT,
+                    GLOBAL_ID,
+                    D_SQUATTER_USE_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -44,7 +63,9 @@ BEGIN
                     rec.SQUATTER_GUID,
                     rec.VERSION,
                     rec.created_date,
-                    rec.last_edited_date
+                    rec.last_edited_date,
+                    rec.GLOBALID,
+                    rec.SQUATTERUSEID
                 );
             ELSIF  rec.SQUATTER_PEND_GUID IS NOT NULL AND rec.SQUATTER_GUID IS NULL THEN
                 INSERT INTO SQ.SQUATTER_USES (
@@ -54,7 +75,9 @@ BEGIN
                     SQUATTER_PEND_GUID, 
                     SQUATTER_VERSION,
                     CREATED_AT,
-                    UPDATED_AT
+                    UPDATED_AT,
+                    GLOBAL_ID,
+                    D_SQUATTER_USE_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -62,7 +85,9 @@ BEGIN
                     rec.SQUATTER_PEND_GUID,
                     rec.VERSION,
                     rec.created_date,
-                    rec.last_edited_date
+                    rec.last_edited_date,
+                    rec.GLOBALID,
+                    rec.SQUATTERUSEID
                 );
             ELSE
                 v_error_message := 'Missing mandatory join data: SQUATTER_PEND_GUID AND SQUATTER_GUID MATCH WITH A SQUATTERMATIRAL!!';

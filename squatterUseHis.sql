@@ -7,8 +7,8 @@ BEGIN
             suh.OBJECTID,
             suh.SQUATTERID,
             suh.SQUATTERUSEID,
-            suh.MATERIALS,
-            suh.GlobalID,
+            suh.SQUATTERUSE,
+            suh.GLOBALID,
             suh.created_user,
             suh.created_date,
             suh.last_edited_user,
@@ -24,8 +24,27 @@ BEGIN
         BEGIN
             generate_Formatted_GUID(v_guid);
             IF rec.SQUATTER_HIS_GUID IS NULL  THEN
-                v_error_message := 'Missing mandatory join data: SQUATTER_HIS_GUID is NULL!!';
-                log_error('SQUATTER_USE_HIS', v_error_message, rec.OBJECTID);
+                INSERT INTO SQ.SQUATTER_USE_HIS (
+                    ID,
+                    SQUATTER_ID, 
+                    USE_ID, 
+                    SQUATTER_VERSION,
+                    CREATED_AT,
+                    UPDATED_AT,
+                    OBJECT_ID,
+                    GLOBAL_ID,
+                    D_SQUATTER_USE_ID
+                ) VALUES (
+                    v_guid,
+                    rec.SQUATTERID, 
+                    rec.USE_ID,
+                    rec.VERSION,
+                    rec.created_date,
+                    rec.last_edited_date,
+                    rec.OBJECTID,
+                    rec.GLOBALID,
+                    rec.SQUATTERUSEID
+                );
             ELSE 
                 INSERT INTO SQ.SQUATTER_USE_HIS (
                     ID,
@@ -35,7 +54,9 @@ BEGIN
                     SQUATTER_VERSION,
                     CREATED_AT,
                     UPDATED_AT,
-                    OBJECT_ID
+                    OBJECT_ID,
+                    GLOBAL_ID,
+                    D_SQUATTER_USE_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -44,7 +65,9 @@ BEGIN
                     rec.VERSION,
                     rec.created_date,
                     rec.last_edited_date,
-                    rec.OBJECTID
+                    rec.OBJECTID,
+                    rec.GLOBALID,
+                    rec.SQUATTERUSEID
                 );
 
             END IF;
