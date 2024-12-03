@@ -39,14 +39,18 @@ BEGIN
                 DISPLAYNAME,
                 FILESIZE,
                 "URL",
-                "OBJECT_ID"
+                "OBJECT_ID",
+                CREATED_AT,
+                UPDATED_AT
             ) VALUES (
                 v_guid,
                 rec.NAME,
                 rec.NAME,
                 0,
                 filepath,
-                rec.OBJECTID
+                rec.OBJECTID,
+                rec.CREATED_DATE,
+                rec.CREATED_DATE,
             );
 
             -- Insert into ATTACHMENT_SQ based on FILE_TYPE
