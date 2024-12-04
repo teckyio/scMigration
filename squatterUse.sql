@@ -13,7 +13,7 @@ BEGIN
             sm.created_date,
             sm.last_edited_user,
             sm.last_edited_date,
-            sm.VERSION,
+            NVL(sm.VERSION, 0) AS VERSION,
             m.ID AS USE_ID,
             s.ID AS SQUATTER_GUID,
             sp.ID AS SQUATTER_PEND_GUID

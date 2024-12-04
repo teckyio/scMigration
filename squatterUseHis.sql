@@ -13,7 +13,7 @@ BEGIN
             suh.created_date,
             suh.last_edited_user,
             suh.last_edited_date,
-            suh.VERSION,
+            NVL(suh.VERSION, 0) AS VERSION,
             m.ID AS USE_ID,
             s.ID AS SQUATTER_HIS_GUID
         FROM SDE_SQ.SQUATTERUSE_HIS suh

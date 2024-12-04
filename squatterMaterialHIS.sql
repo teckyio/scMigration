@@ -13,7 +13,7 @@ BEGIN
             sm.created_date,
             sm.last_edited_user,
             sm.last_edited_date,
-            sm.VERSION,
+            NVL(sm.VERSION, 0) AS VERSION,
             m.ID AS MATERIAL_ID,
             s.ID AS SQUATTER_HIS_GUID
         FROM SDE_SQ.SQUATTERMATERIAL_HIS sm
