@@ -34,7 +34,8 @@ BEGIN
                     CREATED_AT,
                     UPDATED_AT,
                     GLOBAL_ID,
-                    D_SQUATTER_MATERIAL_ID
+                    D_SQUATTER_MATERIAL_ID,
+                    OBJECT_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -42,8 +43,9 @@ BEGIN
                     rec.VERSION,
                     rec.created_date,
                     rec.last_edited_date,
-                    rec.D_GLOBALID,
-                    rec.SQUATTERMATERIALID
+                    rec.GLOBALID,
+                    rec.SQUATTERMATERIALID,
+                    rec.OBJECTID
                 );
             ELSIF rec.SQUATTER_GUID IS NOT NULL AND rec.SQUATTER_PEND_GUID IS NULL THEN
                 INSERT INTO SQ.SQUATTER_MATERIALS (
@@ -55,7 +57,8 @@ BEGIN
                     CREATED_AT,
                     UPDATED_AT,
                     GLOBAL_ID,
-                    D_SQUATTER_MATERIAL_ID
+                    D_SQUATTER_MATERIAL_ID,
+                    OBJECT_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -64,8 +67,9 @@ BEGIN
                     rec.VERSION,
                     rec.created_date,
                     rec.last_edited_date,
-                    rec.D_GLOBALID,
-                    rec.SQUATTERMATERIALID
+                    rec.GLOBALID,
+                    rec.SQUATTERMATERIALID,
+                    rec.OBJECTID
                 );
             ELSIF  rec.SQUATTER_PEND_GUID IS NOT NULL AND rec.SQUATTER_GUID IS NULL THEN
                 INSERT INTO SQ.SQUATTER_MATERIALS (
@@ -77,7 +81,8 @@ BEGIN
                     CREATED_AT,
                     UPDATED_AT,
                     GLOBAL_ID,
-                    D_SQUATTER_MATERIAL_ID
+                    D_SQUATTER_MATERIAL_ID,
+                    OBJECT_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -86,8 +91,9 @@ BEGIN
                     rec.VERSION,
                     rec.created_date,
                     rec.last_edited_date,
-                    rec.D_GLOBALID,
-                    rec.SQUATTERMATERIALID
+                    rec.GLOBALID,
+                    rec.SQUATTERMATERIALID,
+                    rec.OBJECTID
                 );
             ELSE
                 v_error_message := 'Missing mandatory join data: SQUATTER_PEND_GUID AND SQUATTER_GUID MATCH WITH A SQUATTERMATIRAL!!';

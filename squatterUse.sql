@@ -34,7 +34,8 @@ BEGIN
                     CREATED_AT,
                     UPDATED_AT,
                     GLOBAL_ID,
-                    D_SQUATTER_USE_ID
+                    D_SQUATTER_USE_ID,
+                    OBJECT_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -43,7 +44,8 @@ BEGIN
                     rec.created_date,
                     rec.last_edited_date,
                     rec.GLOBALID,
-                    rec.SQUATTERUSEID
+                    rec.SQUATTERUSEID,
+                    rec.OBJECTID
                 );
             ELSIF rec.SQUATTER_GUID IS NOT NULL AND rec.SQUATTER_PEND_GUID IS NULL THEN
                 INSERT INTO SQ.SQUATTER_USES (
@@ -55,7 +57,8 @@ BEGIN
                     CREATED_AT,
                     UPDATED_AT,
                     GLOBAL_ID,
-                    D_SQUATTER_USE_ID
+                    D_SQUATTER_USE_ID,
+                    OBJECT_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -65,7 +68,8 @@ BEGIN
                     rec.created_date,
                     rec.last_edited_date,
                     rec.GLOBALID,
-                    rec.SQUATTERUSEID
+                    rec.SQUATTERUSEID,
+                    rec.OBJECTID
                 );
             ELSIF  rec.SQUATTER_PEND_GUID IS NOT NULL AND rec.SQUATTER_GUID IS NULL THEN
                 INSERT INTO SQ.SQUATTER_USES (
@@ -77,7 +81,8 @@ BEGIN
                     CREATED_AT,
                     UPDATED_AT,
                     GLOBAL_ID,
-                    D_SQUATTER_USE_ID
+                    D_SQUATTER_USE_ID,
+                    OBJECT_ID
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -87,7 +92,8 @@ BEGIN
                     rec.created_date,
                     rec.last_edited_date,
                     rec.GLOBALID,
-                    rec.SQUATTERUSEID
+                    rec.SQUATTERUSEID,
+                    rec.OBJECTID
                 );
             ELSE
                 v_error_message := 'Missing mandatory join data: SQUATTER_PEND_GUID AND SQUATTER_GUID MATCH WITH A SQUATTERMATIRAL!!';
