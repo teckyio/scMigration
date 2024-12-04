@@ -41,7 +41,7 @@ BEGIN
                     rec.VERSION,
                     rec.created_date,
                     rec.last_edited_date,
-                    rec.OBJECT_ID,
+                    rec.OBJECTID,
                     rec.GLOBALID,
                     rec.SQUATTERMATERIALID
                 );
@@ -65,7 +65,7 @@ BEGIN
                     rec.VERSION,
                     rec.created_date,
                     rec.last_edited_date,
-                    rec.OBJECT_ID,
+                    rec.OBJECTID,
                     rec.GLOBALID,
                     rec.SQUATTERMATERIALID
                 );
