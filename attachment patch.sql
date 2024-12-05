@@ -1,5 +1,5 @@
 
-update sde_sq.SQUATTER_UPLOAD set name = '551 SOV_repair_已標記密文.pdf' where OBJECTID = 16;
+update SQ.ATTACHMENTS set name = '551 SOV_repair_已標記密文.pdf' where OBJECTID = 16;
 update sde_sq.SQUATTER_UPLOAD set name = 'notification form (edited copy for DFA)_已標記密文.pdf' where OBJECTID = 17;
 update sde_sq.SQUATTER_UPLOAD set name = '551 SOV_repair_已標記密文.pdf' where OBJECTID = 20;
 update sde_sq.SQUATTER_UPLOAD set name = 'renewed notification form_已標記密文.pdf' where OBJECTID = 23;
@@ -36,33 +36,33 @@ SELECT COUNT(*) AS SUCCESS_COUNT
 FROM sde_sq.SQUATTER_UPLOAD
 WHERE
   ( name = '551 SOV_repair_已標記密文.pdf' AND OBJECTID = 16) OR
-  ('notification form (edited copy for DFA)_已標記密文.pdf' AND OBJECTID = 17) OR
-  ('551 SOV_repair_已標記密文.pdf' AND OBJECTID = 20) OR
-  ('renewed notification form_已標記密文.pdf' AND OBJECTID = 23) OR
-  ('551 SOV_repair_已標記密文.pdf' AND OBJECTID = 24) OR
-  ('修葺重建登記寮屋通知書 (RTW-4B-211)--[SCTW 180-21].pdf' AND OBJECTID = 88) OR
-  ('已登記寮屋通知書.pdf' AND OBJECTID = 242) OR
-  ('已登記寮屋通知書.pdf' AND OBJECTID = 243) OR
-  ('已登記寮屋通知書.pdf' AND OBJECTID = 244) OR
-  ('已登記寮屋通知書.pdf' AND OBJECTID = 245) OR
-  ('220125_TP VRS C 136-22_申請記錄在案-redacted.pdf' AND OBJECTID = 1061) OR
-  ('220602_VRS C 19-21_81-000584 申請記錄在案-redacted.pdf' AND OBJECTID = 1062) OR
-  ('220602_VRS C 19-21_81-000584 申請記錄在案-redacted.pdf' AND OBJECTID = 1063) OR
-  ('220602_VRS C 19-21_81-000584 申請記錄在案-redacted.pdf' AND OBJECTID = 1064) OR
-  ('220324-220207_TP VRS C 17-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1077) OR
-  ('220602_VRS C 39-21_81-000817 申請記錄在案-redacted.pdf' AND OBJECTID = 1097) OR
-  ('220216_TP VRS C 7-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1116) OR
-  ('221220_VRS C 155-22_TP018 申請記錄在案 redacted.pdf' AND OBJECTID = 1117) OR
-  ('211229_TP VRS A 25-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1118) OR
-  ('211229_TP VRS A 25-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1119) OR
-  ('220406_VRS B 27-21_61-000225_申請記錄在案-redacted.pdf' AND OBJECTID = 1126) OR
-  ('220125_TP VRS C 34-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1134) OR
-  ('220125_TP VRS C 34-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1135) OR
-  ('Approval Letter 吳茵妮 LDE_VRS_4_23 SK017.pdf' AND OBJECTID = 841) OR
-  ('211230_TP VRS A 23-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1020) OR
-  ('220321_TP VRS C 30-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1021) OR
-  ('220526_VRS C 89-21_61-000029 申請記錄在案-redacted.pdf' AND OBJECTID = 1029) OR
-  ('220526_VRS C 89-21_61-000029 申請記錄在案-redacted.pdf' AND OBJECTID = 1030) OR
-  ('220527_VRS B 21-21_61-000194 申請記錄在案-redacted.pdf' AND OBJECTID = 1043) OR
-  ('220527_VRS B 21-21_61-000194 申請記錄在案-redacted.pdf' AND OBJECTID = 1044) OR
-  ('220527_VRS B 21-21_61-000194 申請記錄在案-redacted.pdf' AND OBJECTID = 1045);
+  ( name = 'notification form (edited copy for DFA)_已標記密文.pdf' AND OBJECTID = 17) OR
+  ( name = '551 SOV_repair_已標記密文.pdf' AND OBJECTID = 20) OR
+  ( name = 'renewed notification form_已標記密文.pdf' AND OBJECTID = 23) OR
+  ( name = '551 SOV_repair_已標記密文.pdf' AND OBJECTID = 24) OR
+  ( name = '修葺重建登記寮屋通知書 (RTW-4B-211)--[SCTW 180-21].pdf' AND OBJECTID = 88) OR
+  ( name = '已登記寮屋通知書.pdf' AND OBJECTID = 242) OR
+  ( name = '已登記寮屋通知書.pdf' AND OBJECTID = 243) OR
+  ( name = '已登記寮屋通知書.pdf' AND OBJECTID = 244) OR
+  ( name = '已登記寮屋通知書.pdf' AND OBJECTID = 245) OR
+  ( name = '220125_TP VRS C 136-22_申請記錄在案-redacted.pdf' AND OBJECTID = 1061) OR
+  ( name = '220602_VRS C 19-21_81-000584 申請記錄在案-redacted.pdf' AND OBJECTID = 1062) OR
+  ( name = '220602_VRS C 19-21_81-000584 申請記錄在案-redacted.pdf' AND OBJECTID = 1063) OR
+  ( name = '220602_VRS C 19-21_81-000584 申請記錄在案-redacted.pdf' AND OBJECTID = 1064) OR
+  ( name = '220324-220207_TP VRS C 17-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1077) OR
+  ( name = '220602_VRS C 39-21_81-000817 申請記錄在案-redacted.pdf' AND OBJECTID = 1097) OR
+  ( name = '220216_TP VRS C 7-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1116) OR
+  ( name = '221220_VRS C 155-22_TP018 申請記錄在案 redacted.pdf' AND OBJECTID = 1117) OR
+  ( name = '211229_TP VRS A 25-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1118) OR
+  ( name = '211229_TP VRS A 25-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1119) OR
+  ( name = '220406_VRS B 27-21_61-000225_申請記錄在案-redacted.pdf' AND OBJECTID = 1126) OR
+  ( name = '220125_TP VRS C 34-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1134) OR
+  ( name = '220125_TP VRS C 34-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1135) OR
+  ( name = 'Approval Letter 吳茵妮 LDE_VRS_4_23 SK017.pdf' AND OBJECTID = 841) OR
+  ( name = '211230_TP VRS A 23-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1020) OR
+  ( name = '220321_TP VRS C 30-21_申請記錄在案-redacted.pdf' AND OBJECTID = 1021) OR
+  ( name = '220526_VRS C 89-21_61-000029 申請記錄在案-redacted.pdf' AND OBJECTID = 1029) OR
+  ( name = '220526_VRS C 89-21_61-000029 申請記錄在案-redacted.pdf' AND OBJECTID = 1030) OR
+  ( name = '220527_VRS B 21-21_61-000194 申請記錄在案-redacted.pdf' AND OBJECTID = 1043) OR
+  ( name = '220527_VRS B 21-21_61-000194 申請記錄在案-redacted.pdf' AND OBJECTID = 1044) OR
+  ( name = '220527_VRS B 21-21_61-000194 申請記錄在案-redacted.pdf' AND OBJECTID = 1045);
