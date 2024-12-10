@@ -1,5 +1,5 @@
 
-update SQ.ATTACHMENTS set name = '551 SOV_repair_已標記密文.pdf' where OBJECTID = 16;
+update sde_sq.SQUATTER_UPLOAD set name = '551 SOV_repair_已標記密文.pdf' where OBJECTID = 16;
 update sde_sq.SQUATTER_UPLOAD set name = 'notification form (edited copy for DFA)_已標記密文.pdf' where OBJECTID = 17;
 update sde_sq.SQUATTER_UPLOAD set name = '551 SOV_repair_已標記密文.pdf' where OBJECTID = 20;
 update sde_sq.SQUATTER_UPLOAD set name = 'renewed notification form_已標記密文.pdf' where OBJECTID = 23;
@@ -30,6 +30,7 @@ update sde_sq.SQUATTER_UPLOAD set name = '220526_VRS C 89-21_61-000029 申請記
 update sde_sq.SQUATTER_UPLOAD set name = '220527_VRS B 21-21_61-000194 申請記錄在案-redacted.pdf' where OBJECTID = 1043;
 update sde_sq.SQUATTER_UPLOAD set name = '220527_VRS B 21-21_61-000194 申請記錄在案-redacted.pdf' where OBJECTID = 1044;
 update sde_sq.SQUATTER_UPLOAD set name = '220527_VRS B 21-21_61-000194 申請記錄在案-redacted.pdf' where OBJECTID = 1045;
+
 
 
 SELECT COUNT(*) AS SUCCESS_COUNT
