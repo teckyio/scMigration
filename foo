@@ -1,0 +1,10 @@
+UPDATE table_A
+SET column_b = CASE
+    WHEN postname = 'N/SLE/LDE1' THEN '5b140cb4-fac6-42a2-ac6b-2981ffa46230'
+    WHEN postname = 'N/LE/LDE1/1' THEN 'b92a16eb-33e6-42ab-85eb-91527573d435'
+    WHEN postname = 'N/SLE/LDE5/1' THEN 'c6e468a5-293a-4cbc-821b-e4b7491fc98e'
+    WHEN postname = 'N/LE/LDE5/1' THEN '2131880a-abe5-4207-b1b5-e2fcb8ada89c'
+    WHEN postname = 'N/SLE/LDE2' THEN '775a8b3b-b292-4c93-8254-fd53eb2d1c34'
+    WHEN postname = 'N/LE/LDE1/2' THEN 'acceebaf-5f0f-450a-8f9e-7a7748c161db'
+END
+WHERE postname IN ('N/SLE/LDE1', 'N/LE/LDE1/1', 'N/SLE/LDE5/1', 'N/LE/LDE5/1', 'N/SLE/LDE2', 'N/LE/LDE1/2');
