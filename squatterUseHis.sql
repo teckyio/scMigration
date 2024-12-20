@@ -33,7 +33,9 @@ BEGIN
                     UPDATED_AT,
                     OBJECT_ID,
                     GLOBAL_ID,
-                    D_SQUATTER_USE_ID
+                    D_SQUATTER_USE_ID,
+                    CREATED_BY,
+                    UPDATED_BY
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -43,7 +45,9 @@ BEGIN
                     rec.last_edited_date,
                     rec.OBJECTID,
                     rec.GLOBALID,
-                    rec.SQUATTERUSEID
+                    rec.SQUATTERUSEID,
+                    rec.created_user,
+                    rec.last_edited_user
                 );
             ELSE 
                 INSERT INTO SQ.SQUATTER_USE_HIS (
@@ -56,7 +60,9 @@ BEGIN
                     UPDATED_AT,
                     OBJECT_ID,
                     GLOBAL_ID,
-                    D_SQUATTER_USE_ID
+                    D_SQUATTER_USE_ID,
+                    CREATED_BY,
+                    UPDATED_BY
                 ) VALUES (
                     v_guid,
                     rec.SQUATTERID, 
@@ -67,7 +73,9 @@ BEGIN
                     rec.last_edited_date,
                     rec.OBJECTID,
                     rec.GLOBALID,
-                    rec.SQUATTERUSEID
+                    rec.SQUATTERUSEID,
+                    rec.created_user,
+                    rec.last_edited_user
                 );
 
             END IF;
