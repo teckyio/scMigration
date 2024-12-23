@@ -92,28 +92,22 @@ BEGIN
                 v_guid,
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
                 rec.LOCATION, v_dlo_id, 
-                rec.FILENAME, rec.STATUS, SUBSTR(rec.CREATION_DATE, 1, 10), rec.SQUATTERDISTRICT, 
+                rec.FILENAME, rec.STATUS,rec.CREATION_DATE, rec.SQUATTERDISTRICT, 
                 rec.PLANFILENAME, 
-                rec.CREATED_USER, rec.LAST_EDITED_USER, SUBSTR(rec.LAST_EDITED_DATE,1,10), 
+                rec.CREATED_USER, rec.LAST_EDITED_USER, rec.LAST_EDITED_DATE, 
                 rec.CISSQUATTERID, 
                 rec.BOOKNO, rec.SERIALNO, rec.SURVEYNO, rec.FILEREF, rec.ISSUE, 
                 rec.SCOFFICE, rec.SURVEYNOPREFIX, 
                 CASE
-                    WHEN rec.HASREMARK = 'true' then 1
+                    WHEN rec.HASREMARK = 'Y' then 1
                     ELSE 0
                 END,
                 rec.HOUSENO, rec.DISPLAYNAME, 
                 rec.BOUNDARYSTATUS, rec.DIMENSIONUNIT, 
                 rec.SERIALNO_EDIT, rec.RECORDDATE_EDIT, 
                 rec.DELETE_REASON, 
-                CASE 
-                    WHEN rec.DELETE_DATE IS NOT NULL THEN SUBSTR(rec.DELETE_DATE, 1, 10) 
-                    ELSE NULL 
-                END, 
-                CASE 
-                    WHEN rec.REINSTATE_DATE IS NOT NULL THEN SUBSTR(rec.REINSTATE_DATE, 1, 10) 
-                    ELSE NULL 
-                END, 
+                rec.DELETE_DATE, 
+                rec.REINSTATE_DATE, 
                 rec.VERSION, 
                 rec.SURVEYRECORD_1982, rec.APPROVED_CREATION_DATE, rec.APPROVED_DELETE_DATE, 
                 rec.APPROVED_REINSTATE_DATE, rec.APPROVED_AMEND_DATE,
@@ -123,7 +117,7 @@ BEGIN
                 rec.CASEFILE,
                 rec.RECORDDATE,
                 rec.CREATED_DATE,
-                rec.LAST_EDITED_DATE
+                rec.LAST_EDITED_DATE,
                 rec.LAST_EDITED_DATE
             );
         EXCEPTION
