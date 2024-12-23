@@ -48,8 +48,8 @@ BEGIN
                     rec.GLOBALID,
                     rec.SQUATTERUSEID,
                     rec.OBJECTID,
-                    res.created_user,
-                    res.last_edited_user
+                    rec.created_user,
+                    rec.last_edited_user
                 );
             ELSIF rec.SQUATTER_GUID IS NOT NULL AND rec.SQUATTER_PEND_GUID IS NULL THEN
                 INSERT INTO SQ.SQUATTER_USES (
@@ -76,8 +76,8 @@ BEGIN
                     rec.GLOBALID,
                     rec.SQUATTERUSEID,
                     rec.OBJECTID,
-                    res.created_user,
-                    res.last_edited_user
+                    rec.created_user,
+                    rec.last_edited_user
                 );
             ELSIF  rec.SQUATTER_PEND_GUID IS NOT NULL AND rec.SQUATTER_GUID IS NULL THEN
                 INSERT INTO SQ.SQUATTER_USES (
@@ -104,8 +104,8 @@ BEGIN
                     rec.GLOBALID,
                     rec.SQUATTERUSEID,
                     rec.OBJECTID,
-                    res.created_user,
-                    res.last_edited_user
+                    rec.created_user,
+                    rec.last_edited_user
                 );
             ELSE
                 v_error_message := 'Missing mandatory join data: SQUATTER_PEND_GUID AND SQUATTER_GUID MATCH WITH A SQUATTERMATIRAL!!';

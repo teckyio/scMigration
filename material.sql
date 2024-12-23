@@ -25,7 +25,7 @@ BEGIN
             IF v_count = 0 THEN
                 -- Get the current max SORTING_INDEX
                 SELECT NVL(MAX(SORTING_INDEX), 0) + 1 INTO v_max_sorting_index FROM SQ.MATERIALS;
-                generate_Formatted_GUID(v_guid)
+                generate_Formatted_GUID(v_guid);
                 INSERT INTO SQ.MATERIALS (ID, NAME, DISPLAY_NAME, SORTING_INDEX, CREATED_AT, UPDATED_AT)
                 VALUES (v_guid, rec.MATERIALS, rec.MATERIALS, v_max_sorting_index, SYSDATE, SYSDATE);
                 COMMIT;
@@ -33,7 +33,7 @@ BEGIN
         EXCEPTION
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
-                log_error('USE', v_error_message, rec.OBJECTID);
+                log_error('MATERIAL', v_error_message, rec.OBJECTID);
         END;
     END LOOP;
 END;
@@ -70,13 +70,14 @@ BEGIN
 
                 -- Insert into the MATERIAL table
                 INSERT INTO SQ.MATERIALS (ID, NAME, DISPLAY_NAME, SORTING_INDEX, CREATED_AT, UPDATED_AT)
+                generate_Formatted_GUID(v_guid);
                 VALUES (v_guid, rec.MATERIALS, rec.MATERIALS, v_max_sorting_index,SYSDATE, SYSDATE);
                 COMMIT;
             END IF;
         EXCEPTION
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
-                log_error('USE', v_error_message, rec.OBJECTID);
+                log_error('MATERIAL', v_error_message, rec.OBJECTID);
         END;
     END LOOP;
 END;
