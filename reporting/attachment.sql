@@ -12,7 +12,11 @@ SELECT
     END || '\' || s.DLO || '\' || s.SQUATTERID || '\' || s.NAME AS "EXPECTED_FILEPATH"
 FROM SDE_SQ.SQUATTER_UPLOAD s
 JOIN SQ.ATTACHMENTS a
-    ON s.OBJECTID = a.OBJECT_ID;
+    ON s.OBJECTID = a.OBJECT_ID
+WHERE a."URL" NOT LIKE '%' || s.DLO || '%'
+  OR a."URL" NOT LIKE '%' || s.SQUATTERID || '%'
+  OR a."URL" NOT LIKE '%' || s.NAME || '%';
+
 
 -- Validate One-to-Many Relationship
 -- Ensure a squatter can have multiple attachments, but no attachment is assigned to more than one squatter.
