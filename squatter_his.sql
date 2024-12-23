@@ -117,7 +117,6 @@ BEGIN
                 rec.CASEFILE,
                 rec.RECORDDATE,
                 rec.CREATED_DATE,
-                rec.LAST_EDITED_DATE,
                 rec.LAST_EDITED_DATE
             );
         EXCEPTION
