@@ -7,6 +7,7 @@ BEGIN
     FOR rec IN (
         SELECT
             sh.OBJECTID,
+            sh.OBJECTID_1,
             sh.SQUATTERID,
             sh.DIMENSION_L,
             sh.DIMENSION_B,
@@ -64,7 +65,7 @@ BEGIN
             INSERT INTO SQ.SQUATTER_HISTORIES (
                 SQUATTER_GUID,
                 ID, 
-                OBJECT_ID, SQUATTER_ID, DIMENSIONS_L, DIMENSIONS_B, DIMENSIONS_H, 
+                OBJECT_ID,OBJECT_ID1, SQUATTER_ID, DIMENSIONS_L, DIMENSIONS_B, DIMENSIONS_H, 
                 SURVEY_LOCATION, DLO_ID, 
                 FILE_NAME, STATUS, CREATED_DATE, DISTRICT, 
                 PLAN_FILE_NAME, 
@@ -90,7 +91,7 @@ BEGIN
             ) VALUES (
                 rec.SQUATTER_GUID, 
                 v_guid,
-                rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
+                rec.OBJECTID,rec.OBJECTID_1, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
                 rec.LOCATION, v_dlo_id, 
                 rec.FILENAME, rec.STATUS,rec.CREATION_DATE, rec.SQUATTERDISTRICT, 
                 rec.PLANFILENAME, 

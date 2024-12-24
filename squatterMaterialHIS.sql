@@ -5,6 +5,7 @@ BEGIN
     FOR rec IN (
         SELECT
             sm.OBJECTID,
+            sm.OBJECTID_1,
             sm.SQUATTERID,
             sm.SQUATTERMATERIALID,
             sm.MATERIALS,
@@ -44,6 +45,7 @@ BEGIN
                     rec.created_date,
                     rec.last_edited_date,
                     rec.OBJECTID,
+                    rec.OBJECTID1,
                     rec.GLOBALID,
                     rec.SQUATTERMATERIALID,
                     rec.created_user,
@@ -59,6 +61,7 @@ BEGIN
                     CREATED_AT,
                     UPDATED_AT,
                     OBJECT_ID,
+                    OBJECT_ID1,
                     GLOBAL_ID,
                     D_SQUATTER_MATERIAL_ID,
                     CREATED_BY,
@@ -72,6 +75,7 @@ BEGIN
                     rec.created_date,
                     rec.last_edited_date,
                     rec.OBJECTID,
+                    rec.OBJECTID_1,
                     rec.GLOBALID,
                     rec.SQUATTERMATERIALID,
                     rec.created_user,
