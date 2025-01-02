@@ -63,4 +63,4 @@ BEGIN
             log_error('DLO', 'Multiple records found for DLOOFFICE: ' || p_dlooffice || 
                              '. Found IDs: ' || v_dlo_ids,NULL);
     END;
-END;
+END find_dlo_id;
