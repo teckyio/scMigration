@@ -19,22 +19,22 @@ AS
               , 0 											 AS is_deleted
               , 1 											 AS is_active
               , null                                         AS structure_type
-              , sc.rate_type                                 AS rate_type
-              , sc.rate_area                                 AS rate_area
-              , sc.rate_code                                 AS rate_code
-              , sc.rate_description                          AS rate_description
-              , sc.rate_nature                               AS rate_nature
-              , sc.rate_per_unit                             AS rate_per_unit
-              , sc.rate_factor                               AS rate_factor
-              , sc.rate_value                                AS rate_value
-              , sc.rate_remarks                              AS rate_remarks
-              , sc.id                                        AS objectid
+              , SQ.rate_type                                 AS rate_type
+              , SQ.rate_area                                 AS rate_area
+              , SQ.rate_code                                 AS rate_code
+              , SQ.rate_description                          AS rate_description
+              , SQ.rate_nature                               AS rate_nature
+              , SQ.rate_per_unit                             AS rate_per_unit
+              , SQ.rate_factor                               AS rate_factor
+              , SQ.rate_value                                AS rate_value
+              , SQ.rate_remarks                              AS rate_remarks
+              , SQ.id                                        AS objectid
               , current_timestamp                            AS created_at
               , current_timestamp                            AS updated_at
             FROM
                 sde_gll.conversion_rates sc
             WHERE
-                sc.id = p_objectid
+                SQ.id = p_objectid
         ) src ON ( src.objectid = f.objectid_d ) WHEN MATCHED THEN UPDATE SET 
 	       	f.rate_type = src.rate_type
 	       	, f.rate_area = src.rate_area

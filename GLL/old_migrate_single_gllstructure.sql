@@ -28,22 +28,22 @@ CREATE OR REPLACE PROCEDURE gll.migrate_single_gllstructure (
               , coalesce(sc.rate_type, sg.ratetype)                    AS ratetype
               , coalesce(sc.rate_area, sg.ratearea)                    AS ratearea
               , coalesce(sc.rate_code, sg.ratecode)                    AS ratecode
-              , sc.rate_description                                    AS ratedescription
-              , sc.rate_nature                                         AS ratenature
-              , sc.rate_per_unit                                       AS rateperunit
-              , sc.rate_factor                                         AS ratefactor
+              , SQ.rate_description                                    AS ratedescription
+              , SQ.rate_nature                                         AS ratenature
+              , SQ.rate_per_unit                                       AS rateperunit
+              , SQ.rate_factor                                         AS ratefactor
               , coalesce(sc.rate_value, sg.ratevalue)                  AS ratevalue
-              , sc.rate_remarks                                        AS rateremarks
+              , SQ.rate_remarks                                        AS rateremarks
               , sg.objectid                                            AS objectid_d
               , -- use gll_structure.objectid_d AS NEW fee_reviews.objectid_d
                 sg.structtype                                          AS structtype
             FROM
                 sde.conversion_rates sc
                 RIGHT JOIN sde.glluserinfo sg
-                ON sc.rate_area = sg.ratearea
-                AND sc.rate_type = sg.ratetype
-                AND sc.rate_code = sg.ratecode
-                AND sc.rate_value = sg.ratevalue
+                ON SQ.rate_area = sg.ratearea
+                AND SQ.rate_type = sg.ratetype
+                AND SQ.rate_code = sg.ratecode
+                AND SQ.rate_value = sg.ratevalue
             WHERE
                 sg.objectid = p_userinfo_objectid
         ) src ON (fre.objectid_d = src.objectid_d) WHEN MATCHED THEN UPDATE SET fre.updated_at = current_timestamp WHEN NOT MATCHED THEN INSERT ( id, start_at, end_at, is_active, structure_type, rate_type, rate_area, rate_code, rate_description, rate_value, objectid_d,

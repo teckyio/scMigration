@@ -1295,7 +1295,7 @@ CREATE UNIQUE INDEX "SC"."PK___EF_MIGRATIONS_HISTORY" ON "SC"."__EFMigrationsHis
   TABLESPACE "SYSTEM" ;
 ;
 
-CREATE OR REPLACE PROCEDURE SC.find_dlo_id(
+CREATE OR REPLACE PROCEDURE SQ.find_dlo_id(
     p_dlooffice IN VARCHAR2,
     p_dlo_id OUT VARCHAR2
 ) IS
@@ -1305,7 +1305,7 @@ BEGIN
         -- Attempt to find a single ID based on the DLO_NAME
         SELECT ID
         INTO p_dlo_id
-        FROM SC.DLOS dlos
+        FROM SQ.DLOS dlos
         WHERE DLO_NAME LIKE '%' || '/' || p_dlooffice || '%'
             OR (p_dlooffice = 'N' AND DLO_NAME LIKE '%/ND%')
             OR (p_dlooffice = 'HKWS' AND DLO_NAME LIKE '%/HKW&S%')
@@ -1322,7 +1322,7 @@ BEGIN
             -- Collect all IDs that match the condition to log them
             SELECT LISTAGG(ID, ', ') WITHIN GROUP (ORDER BY ID)
             INTO v_dlo_ids
-            FROM SC.DLOS
+            FROM SQ.DLOS
             WHERE DLO_NAME LIKE '%' || p_dlooffice || '%';
             
             -- Log an error with the concatenated list of IDs for debugging
@@ -1331,7 +1331,7 @@ BEGIN
     END;
 END find_dlo_id;
 
-CREATE OR REPLACE PROCEDURE SC.generate_Formatted_GUID(p_guid OUT VARCHAR2)
+CREATE OR REPLACE PROCEDURE SQ.generate_Formatted_GUID(p_guid OUT VARCHAR2)
 IS
     l_raw_guid RAW(16);
 BEGIN
@@ -1343,7 +1343,7 @@ BEGIN
               SUBSTR(rawtohex(l_raw_guid), 21, 12);
 END;
 
-CREATE OR REPLACE PROCEDURE SC.LOG_ERROR(
+CREATE OR REPLACE PROCEDURE SQ.LOG_ERROR(
     p_table_name VARCHAR2,
     p_error_msg  VARCHAR2,
     p_object_id VARCHAR2 DEFAULT NULL
@@ -1355,4 +1355,4 @@ BEGIN
 END LOG_ERROR; 
 ;
 
-CREATE SEQUENCE SC."ISEQ$$_75909" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9999999999999999999999999999 NOCYCLE CACHE 20 NOORDER ;
+CREATE SEQUENCE SQ."ISEQ$$_75909" INCREMENT BY 1 MINVALUE 1 MAXVALUE 9999999999999999999999999999 NOCYCLE CACHE 20 NOORDER ;

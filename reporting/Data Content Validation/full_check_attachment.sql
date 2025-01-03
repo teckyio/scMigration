@@ -39,11 +39,11 @@ BEGIN
     FROM 
         SDE_SQ.SQUATTER_UPLOAD rec
     LEFT JOIN 
-        SC.ATTACHMENTS att ON rec.OBJECTID = att.OBJECT_ID
+        SQ.ATTACHMENTS att ON rec.OBJECTID = att.OBJECT_ID
     LEFT JOIN 
-        SC.ATTACHMENT_SQ att_sq ON att.ID = att_sq.ATTACHMENT_ID
+        SQ.ATTACHMENT_SQ att_sq ON att.ID = att_sq.ATTACHMENT_ID
     LEFT JOIN 
-        SC.SQUATTERS sq ON att_sq.SQUATTER_GUID = sq.ID
+        SQ.SQUATTERS sq ON att_sq.SQUATTER_GUID = SQ.ID
     WHERE 
         quantity = 0 OR ROWNUM <= quantity;
 
