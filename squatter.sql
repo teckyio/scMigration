@@ -117,7 +117,7 @@ BEGIN
         EXCEPTION
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
-                log_error('SQUATTERS', v_error_message);
+                log_error('SQUATTERS', v_error_message, rec.OBJECT_ID);
                 CONTINUE;
         END;
     END LOOP;
