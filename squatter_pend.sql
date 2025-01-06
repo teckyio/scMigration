@@ -56,6 +56,7 @@ BEGIN
             s.ID AS SQUATTER_GUID
         FROM SDE_SQ.SQUATTER_PRO sh 
         LEFT JOIN SQ.SQUATTERS s ON sh.SQUATTERID = s.SQUATTER_ID 
+        WHERE OBJECTID NOT IN (SELECT OBJECT_ID FROM SQ.SQUATTER_PENDS WHERE OBJECT_ID IS NOT NULL)
     ) LOOP
         BEGIN
             generate_Formatted_GUID(v_guid);
@@ -91,7 +92,7 @@ BEGIN
             ) VALUES (
                 rec.SQUATTER_GUID, 
                 v_guid,
-                rec.OBJECTID,rec.OBJECTID_1, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
+                rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
                 rec.LOCATION, v_dlo_id, 
                 rec.FILENAME, rec.STATUS,rec.CREATION_DATE, rec.SQUATTERDISTRICT, 
                 rec.PLANFILENAME, 
@@ -120,7 +121,7 @@ BEGIN
         EXCEPTION
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
-                log_error('SQUATTERS_PENDS', v_error_message, rec.OBJECTID);
+                log_error('SQUATTERS_PRO', v_error_message, rec.OBJECTID);
                 CONTINUE;
         END;
     END LOOP;

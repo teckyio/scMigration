@@ -77,7 +77,48 @@ BEGIN
         EXCEPTION
             WHEN OTHERS THEN
                 v_error_message := SQLERRM;
-                log_error('MATERIAL', v_error_message, rec.OBJECTID);
+                log_error('MATERIAL_HIS', v_error_message, rec.OBJECTID);
+        END;
+    END LOOP;
+END;
+
+-- for squatter_material_pro
+DECLARE
+    v_error_message VARCHAR2(4000);
+    v_count INTEGER;
+    v_max_sorting_index INTEGER;
+    v_guid VARCHAR(36);
+BEGIN
+    FOR rec IN (
+        SELECT
+            OBJECTID,
+            SQUATTERID,
+            SQUATTERMATERIALID,
+            MATERIALS,
+            GlobalID,
+            created_user,
+            created_date,
+            last_edited_user,
+            last_edited_date,
+            VERSION
+        FROM SDE_SQ.SQUATTERMATERIAL_PRO
+    ) LOOP
+        BEGIN
+            -- Check if the material already exists in the new Material table
+            SELECT COUNT(1) INTO v_count FROM SQ.MATERIALS WHERE NAME = rec.MATERIALS;
+            
+            IF v_count = 0 THEN
+                -- Get the current max SORTING_INDEX
+                SELECT NVL(MAX(SORTING_INDEX), 0) + 1 INTO v_max_sorting_index FROM SQ.MATERIALS;
+                generate_Formatted_GUID(v_guid);
+                INSERT INTO SQ.MATERIALS (ID, NAME, DISPLAY_NAME, SORTING_INDEX, CREATED_AT, UPDATED_AT)
+                VALUES (v_guid, rec.MATERIALS, rec.MATERIALS, v_max_sorting_index, SYSDATE, SYSDATE);
+                COMMIT;
+            END IF;
+        EXCEPTION
+            WHEN OTHERS THEN
+                v_error_message := SQLERRM;
+                log_error('MATERIAL_PRO', v_error_message, rec.OBJECTID);
         END;
     END LOOP;
 END;

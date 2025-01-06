@@ -4,13 +4,18 @@ SELECT 'MATERIAL' AS "TABLE_NAME",
               FROM SDE_SQ.SQUATTERMATERIAL sm
               UNION ALL
               SELECT smh.MATERIALS
-              FROM SDE_SQ.SQUATTERMATERIAL_HIS smh)) AS "TOTAL TYPE OF MATERIAL",
+              FROM SDE_SQ.SQUATTERMATERIAL_HIS smh
+              UNION ALL
+              SELECT smp.MATERIALS
+              FROM SDE_SQ.SQUATTERMATERIAL_PRO smp
+              )) AS "TOTAL TYPE OF MATERIAL",
        (SELECT COUNT(DISTINCT MATERIAL_ID)
         FROM (SELECT sm.MATERIAL_ID
               FROM SQ.SQUATTER_MATERIALS sm
               UNION ALL
               SELECT smh.MATERIAL_ID
-              FROM SQ.SQUATTER_MATERIAL_HIS smh)) AS "SUCCESS"
+              FROM SQ.SQUATTER_MATERIAL_HIS smh
+              )) AS "SUCCESS"
 FROM DUAL
 UNION ALL
 SELECT 'USE' AS "TABLE_NAME",
@@ -19,7 +24,11 @@ SELECT 'USE' AS "TABLE_NAME",
               FROM SDE_SQ.SQUATTERUSE su
               UNION ALL
               SELECT suh.SQUATTERUSE
-              FROM SDE_SQ.SQUATTERUSE_HIS suh)) AS "TOTAL TYPE OF USE",
+              FROM SDE_SQ.SQUATTERUSE_HIS suh
+              UNION ALL
+              SELECT sup.SQUATTERUSE
+              FROM SDE_SQ.SQUATTERUSE_PRO sup
+              )) AS "TOTAL TYPE OF USE",
        (SELECT COUNT(DISTINCT USE_ID)
         FROM (SELECT su.USE_ID
               FROM SQ.SQUATTER_USES su
