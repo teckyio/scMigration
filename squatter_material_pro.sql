@@ -5,7 +5,6 @@ BEGIN
     FOR rec IN (
         SELECT
             sm.OBJECTID,
-            sm.OBJECTID_1,
             sm.SQUATTERID,
             sm.SQUATTERMATERIALID,
             sm.MATERIALS,
@@ -24,7 +23,7 @@ BEGIN
         BEGIN
             generate_Formatted_GUID(v_guid);
             IF rec.SQUATTER_PEND_GUID IS NULL  THEN
-                INSERT INTO SQ.SQUATTER_MATERIAL(
+                INSERT INTO SQ.SQUATTER_MATERIALS (
                     ID,
                     SQUATTER_ID, 
                     MATERIAL_ID, 
@@ -50,11 +49,11 @@ BEGIN
                     rec.last_edited_user
                 );
             ELSE 
-                INSERT INTO SQ.SQUATTER_MATERIAL_PRO (
+                INSERT INTO SQ.SQUATTER_MATERIALS (
                     ID,
                     SQUATTER_ID, 
                     MATERIAL_ID, 
-                    SQUATTER_PEND_ID, 
+                    SQUATTER_PEND_GUID, 
                     SQUATTER_VERSION,
                     CREATED_AT,
                     UPDATED_AT,

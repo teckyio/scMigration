@@ -104,7 +104,7 @@ BEGIN
     ) LOOP
         BEGIN
             -- Check if the use already exists in the new Material table
-            SELECT COUNT(1) INTO v_count FROM SQ.USES WHERE NAME = rec.SQUATTERUSE_PRO;
+            SELECT COUNT(1) INTO v_count FROM SQ.USES WHERE NAME = rec.SQUATTERUSE;
 
             IF v_count = 0 THEN
                 -- Get the current max SORTING_INDEX

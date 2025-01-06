@@ -7,7 +7,6 @@ BEGIN
     FOR rec IN (
         SELECT
             sh.OBJECTID,
-            sh.OBJECTID_1,
             sh.SQUATTERID,
             sh.DIMENSION_L,
             sh.DIMENSION_B,
@@ -65,7 +64,7 @@ BEGIN
             INSERT INTO SQ.SQUATTER_PENDS (
                 SQUATTER_GUID,
                 ID, 
-                OBJECT_ID,OBJECT_ID1, SQUATTER_ID, DIMENSIONS_L, DIMENSIONS_B, DIMENSIONS_H, 
+                OBJECT_ID, SQUATTER_ID, DIMENSIONS_L, DIMENSIONS_B, DIMENSIONS_H, 
                 SURVEY_LOCATION, DLO_ID, 
                 FILE_NAME, STATUS, CREATED_DATE, DISTRICT, 
                 SC_PLAN_NO, 
@@ -126,4 +125,3 @@ BEGIN
         END;
     END LOOP;
 END;
-

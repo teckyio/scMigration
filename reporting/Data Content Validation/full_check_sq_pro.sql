@@ -1,9 +1,9 @@
-TRUNCATE TABLE data_validation_squatters;
+TRUNCATE TABLE data_validation_squatter_pends;
 DECLARE quantity INT := 481;
 table_count INT;
 v_dlo_id VARCHAR2(36);
 BEGIN -- Insert data into the table with validation checks
-INSERT INTO data_validation_squatters (objectid, targetObjectId, error_msg, is_valid)
+INSERT INTO data_validation_squatter_pends (objectid, target_ObjectId, error_msg, is_valid)
 SELECT rec.objectid AS objectid,
 	s.OBJECT_ID AS target_ObjectId,
 	-- Concatenate error messages for all mismatched fields
@@ -425,12 +425,12 @@ SELECT rec.objectid AS objectid,
 		) IS NULL THEN 1
 		ELSE 0
 	END AS is_valid
-FROM SDE_SQ.SQUATTER rec
-	LEFT JOIN SQ.SQUATTERS s ON rec.OBJECTID = s.object_id
+FROM SDE_SQ.SQUATTER_PRO rec
+	LEFT JOIN SQ.SQUATTER_PENDS s ON rec.OBJECTID = s.object_id
 WHERE quantity = 0
 	OR ROWNUM <= quantity;
 -- Commit transaction
 COMMIT;
 END;
 SELECT *
-FROM data_validation_squatters;
+FROM data_validation_squatter_pends;

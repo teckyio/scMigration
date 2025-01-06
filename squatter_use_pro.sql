@@ -5,7 +5,6 @@ BEGIN
     FOR rec IN (
         SELECT
             suh.OBJECTID,
-            suh.OBJECTID_1,
             suh.SQUATTERID,
             suh.SQUATTERUSEID,
             suh.SQUATTERUSE,
@@ -19,12 +18,12 @@ BEGIN
             s.ID AS SQUATTER_PEND_GUID
         FROM SDE_SQ.SQUATTERUSE_PRO suh
         LEFT JOIN SQ.USES m ON suh.SQUATTERUSE = m.NAME 
-        LEFT JOIN SQ.SQUATTER_PEND s ON suh.SQUATTERID = s.SQUATTER_ID AND suh.VERSION = s.VERSION
+        LEFT JOIN SQ.SQUATTER_PENDS s ON suh.SQUATTERID = s.SQUATTER_ID AND suh.VERSION = s.VERSION
     ) LOOP
         BEGIN
             generate_Formatted_GUID(v_guid);
             IF rec.SQUATTER_PEND_GUID IS NULL THEN
-                INSERT INTO SQ.SQUATTER_USE (
+                INSERT INTO SQ.SQUATTER_USES (
                     ID,
                     SQUATTER_ID, 
                     USE_ID, 
@@ -50,11 +49,11 @@ BEGIN
                     rec.last_edited_user
                 );
             ELSE 
-                INSERT INTO SQ.SQUATTER_USE (
+                INSERT INTO SQ.SQUATTER_USES (
                     ID,
                     SQUATTER_ID, 
                     USE_ID, 
-                    SQUATTER_PEND_ID, 
+                    SQUATTER_PEND_GUID, 
                     SQUATTER_VERSION,
                     CREATED_AT,
                     UPDATED_AT,
