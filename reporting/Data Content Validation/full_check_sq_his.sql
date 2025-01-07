@@ -427,4 +427,4 @@ WHERE quantity = 0
 COMMIT;
 END;
 SELECT *
-FROM data_validation_squatters;
+FROM data_validation_squatter_his;

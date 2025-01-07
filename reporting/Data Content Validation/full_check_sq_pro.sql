@@ -212,7 +212,7 @@ SELECT rec.objectid AS objectid,
 		END,
 		'; '
 	),
-	CASE
+	CASE WHEN
 		(
 			CASE
 			WHEN rec.OBJECTID = s.OBJECT_ID THEN ''
