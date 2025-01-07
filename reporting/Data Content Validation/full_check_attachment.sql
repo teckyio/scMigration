@@ -32,8 +32,8 @@ SELECT rec.OBJECTID AS objectid,
                     WHEN rec.FILE_TYPE = 'V'
                     AND NVL(att_sq."TYPE", 'NULL') = 'OccupantsVRNotiLetter' THEN ''
                     ELSE 'NULL;'
-                END || '\' || rec.DLO || ' \ ' || rec.SQUATTERID || ' \ ' || rec.NAME, 
-            ' NULL '
+                END || '\' || rec.DLO || '\' || rec.SQUATTERID || '\' || rec.NAME, 
+            'NULL'
         ) = NVL(att."URL", 'NULL') 
         THEN '' 
         ELSE 'URL;
@@ -51,21 +51,21 @@ SELECT rec.OBJECTID AS objectid,
         CASE 
             WHEN RTRIM(
                     CASE 
-        WHEN NVL(rec.NAME, ' NULL ') = NVL(att.DISPLAYNAME, ' NULL ') 
+        WHEN NVL(rec.NAME, 'NULL') = NVL(att.DISPLAYNAME, 'NULL') 
         THEN '' 
         ELSE 'NAME;
 ' 
     END ||
     CASE 
-        WHEN NVL(rec.CREATED_DATE, TO_DATE(' 1900 -01 -01 ', ' YYYY - MM - DD ')) = NVL(att.CREATED_AT, TO_DATE(' 1900 -01 -01 ', ' YYYY - MM - DD ')) 
+        WHEN NVL(rec.CREATED_DATE, TO_DATE('1900-01-01', 'YYYY-MM-DD')) = NVL(att.CREATED_AT, TO_DATE('1900-01-01', 'YYYY-MM-DD')) 
         THEN '' 
         ELSE 'CREATED_DATE;
 ' 
     END ||
     CASE 
-        WHEN rec.FILE_TYPE = ' N ' AND NVL(att_sq."TYPE", ' NULL ') = ' RepairRebuildNoti ' 
+        WHEN rec.FILE_TYPE = 'N' AND NVL(att_sq."TYPE", ' NULL ') = ' RepairRebuildNoti ' 
         THEN '' 
-        WHEN rec.FILE_TYPE = ' V ' AND NVL(att_sq."TYPE", ' NULL ') = ' OccupantsVRNotiLetter ' 
+        WHEN rec.FILE_TYPE = 'V' AND NVL(att_sq."TYPE", ' NULL ') = ' OccupantsVRNotiLetter ' 
         THEN '' 
         ELSE 'FILE_TYPE;
 ' 
@@ -73,15 +73,15 @@ SELECT rec.OBJECTID AS objectid,
     CASE 
         WHEN NVL(
             CASE 
-                WHEN rec.FILE_TYPE = ' N ' AND NVL(att_sq."TYPE", ' NULL ') = ' RepairRebuildNoti ' 
+                WHEN rec.FILE_TYPE = 'N' AND NVL(att_sq."TYPE", 'NULL') = 'RepairRebuildNoti' 
                 THEN '' 
-                WHEN rec.FILE_TYPE = ' V ' AND NVL(att_sq."TYPE", ' NULL ') = ' OccupantsVRNotiLetter ' 
+                WHEN rec.FILE_TYPE = 'V' AND NVL(att_sq."TYPE", 'NULL') = 'OccupantsVRNotiLetter' 
                 THEN '' 
                 ELSE 'NULL;
 ' 
             END || ' \ ' || rec.DLO || ' \ ' || rec.SQUATTERID || ' \ ' || rec.NAME, 
             ' NULL '
-        ) = NVL(att."URL", ' NULL ') 
+        ) = NVL(att."URL", 'NULL') 
         THEN '' 
         ELSE 'URL;
 ' 
