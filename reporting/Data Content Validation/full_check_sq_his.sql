@@ -30,7 +30,7 @@ SELECT rec.objectid AS objectid,
 			WHEN rec.FILENAME = s.file_name THEN ''
 			ELSE 'FILE_NAME;'
 		END || CASE
-			WHEN rec.STATUS = s.status THEN ''
+			WHEN NVL(rec.STATUS, 'NULL') = NVL(s.status, 'NULL') THEN ''
 			ELSE 'STATUS;'
 		END || CASE
 			WHEN rec.SQUATTERDISTRICT = s.district THEN ''
@@ -236,7 +236,7 @@ SELECT rec.objectid AS objectid,
 			WHEN rec.FILENAME = s.file_name THEN ''
 			ELSE 'FILE_NAME;'
 		END || CASE
-			WHEN rec.STATUS = s.status THEN ''
+			WHEN NVL(rec.STATUS, 'NULL') = NVL(s.status, 'NULL') THEN ''
 			ELSE 'STATUS;'
 		END || CASE
 			WHEN rec.SQUATTERDISTRICT = s.district THEN ''
