@@ -24,37 +24,37 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.DIMENSION_H, -1) = NVL(s.dimensions_h, -1) THEN ''
 			ELSE 'DIMENSIONS_H'
 		END || CASE
-			WHEN rec.LOCATION = s.survey_location THEN ''
+			WHEN NVL(rec.LOCATION, 'NULL') = NVL(s.survey_location, 'NULL') THEN ''
 			ELSE 'SURVEY_LOCATION;'
 		END || CASE
-			WHEN rec.FILENAME = s.file_name THEN ''
+			WHEN NVL(rec.FILENAME, 'NULL') = NVL(s.file_name, 'NULL') THEN ''
 			ELSE 'FILE_NAME;'
 		END || CASE
 			WHEN NVL(rec.STATUS, 'NULL') = NVL(s.status, 'NULL') THEN ''
 			ELSE 'STATUS;'
 		END || CASE
-			WHEN rec.SQUATTERDISTRICT = s.district THEN ''
+			WHEN NVL(rec.SQUATTERDISTRICT, 'NULL') = NVL(s.district, 'NULL') THEN ''
 			ELSE 'DISTRICT;'
 		END || CASE
-			WHEN rec.PLANFILENAME = s.SC_PLAN_NO THEN ''
+			WHEN NVL(rec.PLANFILENAME, 'NULL') = NVL(s.SC_PLAN_NO, 'NULL') THEN ''
 			ELSE 'PLAN_FILE_NAME;'
 		END || CASE
-			WHEN rec.CREATED_USER = s.created_user THEN ''
+			WHEN NVL(rec.CREATED_USER, 'NULL') = NVL(s.created_user, 'NULL') THEN ''
 			ELSE 'CREATED_USER;'
 		END || CASE
-			WHEN rec.LAST_EDITED_USER = s.last_edited_user THEN ''
+			WHEN NVL(rec.LAST_EDITED_USER, 'NULL') = NVL(s.last_edited_user, 'NULL') THEN ''
 			ELSE 'LAST_EDITED_USER;'
 		END || CASE
-			WHEN rec.LAST_EDITED_DATE = s.last_edited_date THEN ''
+			WHEN NVL(rec.LAST_EDITED_DATE, 'NULL') = NVL(s.last_edited_date, 'NULL') THEN ''
 			ELSE 'LAST_EDITED_DATE;'
 		END || CASE
-			WHEN rec.CISSQUATTERID = s.cis_squatter_id THEN ''
+			WHEN NVL(rec.CISSQUATTERID, 'NULL') = NVL(s.cis_squatter_id, 'NULL') THEN ''
 			ELSE 'CIS_SQUATTER_ID;'
 		END || CASE
 			WHEN NVL(rec.BOOKNO, 'NULL') = NVL(s.book_no, 'NULL') THEN ''
 			ELSE 'BOOK_NO;'
 		END || CASE
-			WHEN NVL(rec.SERIALNO,'NULL') = NVL(s.serial_no,'NULL') THEN ''
+			WHEN NVL(rec.SERIALNO, 'NULL') = NVL(s.serial_no, 'NULL') THEN ''
 			ELSE 'SERIAL_NO;'
 		END || CASE
 			WHEN NVL(rec.SURVEYNO, 'NULL') = NVL(s.survey_no, 'NULL') THEN ''
@@ -66,7 +66,7 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.ISSUE, -1) = NVL(s.DATA_PROBLEM, -1) THEN ''
 			ELSE 'ISSUE;'
 		END || CASE
-			WHEN rec.SCOFFICE = s.sc_office THEN ''
+			WHEN NVL(rec.SCOFFICE, 'NULL') = NVL(s.sc_office, 'NULL') THEN ''
 			ELSE 'SC_OFFICE;'
 		END || CASE
 			WHEN NVL(rec.SURVEYNOPREFIX, 'NULL') = NVL(s.survey_no_prefix, 'NULL') THEN ''
@@ -230,37 +230,37 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.DIMENSION_H, -1) = NVL(s.dimensions_h, -1) THEN ''
 			ELSE 'DIMENSIONS_H'
 		END || CASE
-			WHEN rec.LOCATION = s.survey_location THEN ''
+			WHEN NVL(rec.LOCATION, 'NULL') = NVL(s.survey_location, 'NULL') THEN ''
 			ELSE 'SURVEY_LOCATION;'
 		END || CASE
-			WHEN rec.FILENAME = s.file_name THEN ''
+			WHEN NVL(rec.FILENAME, 'NULL') = NVL(s.file_name, 'NULL') THEN ''
 			ELSE 'FILE_NAME;'
 		END || CASE
 			WHEN NVL(rec.STATUS, 'NULL') = NVL(s.status, 'NULL') THEN ''
 			ELSE 'STATUS;'
 		END || CASE
-			WHEN rec.SQUATTERDISTRICT = s.district THEN ''
+			WHEN NVL(rec.SQUATTERDISTRICT, 'NULL') = NVL(s.district, 'NULL') THEN ''
 			ELSE 'DISTRICT;'
 		END || CASE
-			WHEN rec.PLANFILENAME = s.SC_PLAN_NO THEN ''
+			WHEN NVL(rec.PLANFILENAME, 'NULL') = NVL(s.SC_PLAN_NO, 'NULL') THEN ''
 			ELSE 'PLAN_FILE_NAME;'
 		END || CASE
-			WHEN rec.CREATED_USER = s.created_user THEN ''
+			WHEN NVL(rec.CREATED_USER, 'NULL') = NVL(s.created_user, 'NULL') THEN ''
 			ELSE 'CREATED_USER;'
 		END || CASE
-			WHEN rec.LAST_EDITED_USER = s.last_edited_user THEN ''
+			WHEN NVL(rec.LAST_EDITED_USER, 'NULL') = NVL(s.last_edited_user, 'NULL') THEN ''
 			ELSE 'LAST_EDITED_USER;'
 		END || CASE
-			WHEN rec.LAST_EDITED_DATE = s.last_edited_date THEN ''
+			WHEN NVL(rec.LAST_EDITED_DATE, 'NULL') = NVL(s.last_edited_date, 'NULL') THEN ''
 			ELSE 'LAST_EDITED_DATE;'
 		END || CASE
-			WHEN rec.CISSQUATTERID = s.cis_squatter_id THEN ''
+			WHEN NVL(rec.CISSQUATTERID, 'NULL') = NVL(s.cis_squatter_id, 'NULL') THEN ''
 			ELSE 'CIS_SQUATTER_ID;'
 		END || CASE
 			WHEN NVL(rec.BOOKNO, 'NULL') = NVL(s.book_no, 'NULL') THEN ''
 			ELSE 'BOOK_NO;'
 		END || CASE
-			WHEN NVL(rec.SERIALNO,'NULL') = NVL(s.serial_no,'NULL') THEN ''
+			WHEN NVL(rec.SERIALNO, 'NULL') = NVL(s.serial_no, 'NULL') THEN ''
 			ELSE 'SERIAL_NO;'
 		END || CASE
 			WHEN NVL(rec.SURVEYNO, 'NULL') = NVL(s.survey_no, 'NULL') THEN ''
@@ -272,7 +272,7 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.ISSUE, -1) = NVL(s.DATA_PROBLEM, -1) THEN ''
 			ELSE 'ISSUE;'
 		END || CASE
-			WHEN rec.SCOFFICE = s.sc_office THEN ''
+			WHEN NVL(rec.SCOFFICE, 'NULL') = NVL(s.sc_office, 'NULL') THEN ''
 			ELSE 'SC_OFFICE;'
 		END || CASE
 			WHEN NVL(rec.SURVEYNOPREFIX, 'NULL') = NVL(s.survey_no_prefix, 'NULL') THEN ''
