@@ -3,7 +3,7 @@ DECLARE quantity INT := 481;
 table_count INT;
 v_dlo_id VARCHAR2(36);
 BEGIN -- Insert data into the table with validation checks
-INSERT INTO data_validation_squatters (objectid, targetObjectId, error_msg, is_valid)
+INSERT INTO data_validation_squatters (objectid, target_ObjectId, error_msg, is_valid)
 SELECT rec.objectid AS objectid,
 	s.OBJECT_ID AS target_ObjectId,
 	-- Concatenate error messages for all mismatched fields
@@ -32,9 +32,6 @@ SELECT rec.objectid AS objectid,
 		END || CASE
 			WHEN rec.STATUS = s.status THEN ''
 			ELSE 'STATUS;'
-		END || CASE
-			WHEN rec.CREATED_DATE = s.created_date THEN ''
-			ELSE 'CREATED_DATE;'
 		END || CASE
 			WHEN rec.SQUATTERDISTRICT = s.district THEN ''
 			ELSE 'DISTRICT;'
@@ -199,7 +196,7 @@ SELECT rec.objectid AS objectid,
 				rec.CREATED_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.created_at,
+				s.CREATED_AT,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'CREATED_DATE;'
@@ -241,9 +238,6 @@ SELECT rec.objectid AS objectid,
 			END || CASE
 				WHEN rec.STATUS = s.status THEN ''
 				ELSE 'STATUS;'
-			END || CASE
-				WHEN rec.CREATED_DATE = s.created_date THEN ''
-				ELSE 'CREATED_DATE;'
 			END || CASE
 				WHEN rec.SQUATTERDISTRICT = s.district THEN ''
 				ELSE 'DISTRICT;'
@@ -408,7 +402,7 @@ SELECT rec.objectid AS objectid,
 					rec.CREATED_DATE,
 					TO_DATE('1900-01-01', 'YYYY-MM-DD')
 				) = NVL(
-					s.created_at,
+					s.CREATED_AT,
 					TO_DATE('1900-01-01', 'YYYY-MM-DD')
 				) THEN ''
 				ELSE 'CREATED_DATE;'

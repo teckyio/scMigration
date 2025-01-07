@@ -33,9 +33,6 @@ SELECT rec.objectid AS objectid,
 			WHEN rec.STATUS = s.status THEN ''
 			ELSE 'STATUS;'
 		END || CASE
-			WHEN rec.CREATED_DATE = s.created_date THEN ''
-			ELSE 'CREATED_DATE;'
-		END || CASE
 			WHEN rec.SQUATTERDISTRICT = s.district THEN ''
 			ELSE 'DISTRICT;'
 		END || CASE
@@ -199,7 +196,7 @@ SELECT rec.objectid AS objectid,
 				rec.CREATED_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.created_at,
+				s.CREATED_AT,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'CREATED_DATE;'
@@ -241,9 +238,6 @@ SELECT rec.objectid AS objectid,
 			END || CASE
 				WHEN rec.STATUS = s.status THEN ''
 				ELSE 'STATUS;'
-			END || CASE
-				WHEN rec.CREATED_DATE = s.created_date THEN ''
-				ELSE 'CREATED_DATE;'
 			END || CASE
 				WHEN rec.SQUATTERDISTRICT = s.district THEN ''
 				ELSE 'DISTRICT;'
@@ -408,7 +402,7 @@ SELECT rec.objectid AS objectid,
 					rec.CREATED_DATE,
 					TO_DATE('1900-01-01', 'YYYY-MM-DD')
 				) = NVL(
-					s.created_at,
+					s.CREATED_AT,
 					TO_DATE('1900-01-01', 'YYYY-MM-DD')
 				) THEN ''
 				ELSE 'CREATED_DATE;'

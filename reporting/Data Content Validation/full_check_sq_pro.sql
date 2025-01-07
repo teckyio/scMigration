@@ -33,9 +33,6 @@ SELECT rec.objectid AS objectid,
 			WHEN rec.STATUS = s.status THEN ''
 			ELSE 'STATUS;'
 		END || CASE
-			WHEN rec.CREATED_DATE = s.created_date THEN ''
-			ELSE 'CREATED_DATE;'
-		END || CASE
 			WHEN rec.SQUATTERDISTRICT = s.district THEN ''
 			ELSE 'DISTRICT;'
 		END || CASE
@@ -241,9 +238,6 @@ SELECT rec.objectid AS objectid,
 			END || CASE
 				WHEN rec.STATUS = s.status THEN ''
 				ELSE 'STATUS;'
-			END || CASE
-				WHEN rec.CREATED_DATE = s.created_date THEN ''
-				ELSE 'CREATED_DATE;'
 			END || CASE
 				WHEN rec.SQUATTERDISTRICT = s.district THEN ''
 				ELSE 'DISTRICT;'
