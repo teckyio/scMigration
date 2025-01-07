@@ -1,4 +1,5 @@
 TRUNCATE TABLE data_validation_squatters;
+
 DECLARE quantity INT := 481;
 table_count INT;
 v_dlo_id VARCHAR2(36);
@@ -45,7 +46,7 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.LAST_EDITED_USER, 'NULL') = NVL(s.last_edited_user, 'NULL') THEN ''
 			ELSE 'LAST_EDITED_USER;'
 		END || CASE
-			WHEN NVL(rec.LAST_EDITED_DATE, 'NULL') = NVL(s.last_edited_date, 'NULL') THEN ''
+			WHEN NVL(rec.LAST_EDITED_DATE, TO_DATE('1900-01-01', 'YYYY-MM-DD')) = NVL(s.last_edited_date, TO_DATE('1900-01-01', 'YYYY-MM-DD')) THEN ''
 			ELSE 'LAST_EDITED_DATE;'
 		END || CASE
 			WHEN NVL(rec.CISSQUATTERID, 'NULL') = NVL(s.cis_squatter_id, 'NULL') THEN ''
@@ -81,10 +82,10 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.DISPLAYNAME, 'NULL') = NVL(s.display_name, 'NULL') THEN ''
 			ELSE 'DISPLAY_NAME;'
 		END || CASE
-			WHEN rec.BOUNDARYSTATUS = s.CERTAINTY_OF_DIGITIZED_POLYGON THEN ''
+			WHEN NVL(rec.BOUNDARYSTATUS, 'NULL') = NVL(s.CERTAINTY_OF_DIGITIZED_POLYGON, 'NULL') THEN ''
 			ELSE 'BOUNDARY_STATUS;'
 		END || CASE
-			WHEN rec.DIMENSIONUNIT = s.units THEN ''
+			WHEN NVL(rec.DIMENSIONUNIT, 'NULL') = NVL(s.units, 'NULL') THEN ''
 			ELSE 'UNITS;'
 		END || CASE
 			WHEN NVL(rec.SERIALNO_EDIT, 'NULL') = NVL(s.serial_no_edit, 'NULL') THEN ''
@@ -120,7 +121,7 @@ SELECT rec.objectid AS objectid,
 			) THEN ''
 			ELSE 'RE_INSTATE_DATE;'
 		END || CASE
-			WHEN rec.VERSION = s.version THEN ''
+			WHEN NVL(rec.VERSION, -1) = NVL(s.version, -1) THEN ''
 			ELSE 'VERSION;'
 		END || CASE
 			WHEN NVL(rec.SURVEYRECORD_1982, 'NULL') = NVL(s.survey_record1982, 'NULL') THEN ''
@@ -251,7 +252,7 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.LAST_EDITED_USER, 'NULL') = NVL(s.last_edited_user, 'NULL') THEN ''
 			ELSE 'LAST_EDITED_USER;'
 		END || CASE
-			WHEN NVL(rec.LAST_EDITED_DATE, 'NULL') = NVL(s.last_edited_date, 'NULL') THEN ''
+			WHEN NVL(rec.LAST_EDITED_DATE, TO_DATE('1900-01-01', 'YYYY-MM-DD')) = NVL(s.last_edited_date, TO_DATE('1900-01-01', 'YYYY-MM-DD')) THEN ''
 			ELSE 'LAST_EDITED_DATE;'
 		END || CASE
 			WHEN NVL(rec.CISSQUATTERID, 'NULL') = NVL(s.cis_squatter_id, 'NULL') THEN ''
@@ -287,10 +288,10 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.DISPLAYNAME, 'NULL') = NVL(s.display_name, 'NULL') THEN ''
 			ELSE 'DISPLAY_NAME;'
 		END || CASE
-			WHEN rec.BOUNDARYSTATUS = s.CERTAINTY_OF_DIGITIZED_POLYGON THEN ''
+			WHEN NVL(rec.BOUNDARYSTATUS, 'NULL') = NVL(s.CERTAINTY_OF_DIGITIZED_POLYGON, 'NULL') THEN ''
 			ELSE 'BOUNDARY_STATUS;'
 		END || CASE
-			WHEN rec.DIMENSIONUNIT = s.units THEN ''
+			WHEN NVL(rec.DIMENSIONUNIT , -1)= NVL(s.units, -1) THEN ''
 			ELSE 'UNITS;'
 		END || CASE
 			WHEN NVL(rec.SERIALNO_EDIT, 'NULL') = NVL(s.serial_no_edit, 'NULL') THEN ''
@@ -326,7 +327,7 @@ SELECT rec.objectid AS objectid,
 			) THEN ''
 			ELSE 'RE_INSTATE_DATE;'
 		END || CASE
-			WHEN rec.VERSION = s.version THEN ''
+			WHEN NVL(rec.VERSION, -1) = NVL(s.version, -1) THEN ''
 			ELSE 'VERSION;'
 		END || CASE
 			WHEN NVL(rec.SURVEYRECORD_1982, 'NULL') = NVL(s.survey_record1982, 'NULL') THEN ''
