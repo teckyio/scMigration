@@ -63,9 +63,9 @@ SELECT rec.OBJECTID AS objectid,
 ' 
     END ||
     CASE 
-        WHEN rec.FILE_TYPE = 'N' AND NVL(att_sq."TYPE", ' NULL ') = ' RepairRebuildNoti ' 
+        WHEN rec.FILE_TYPE = 'N' AND NVL(att_sq."TYPE", 'NULL') = 'RepairRebuildNoti' 
         THEN '' 
-        WHEN rec.FILE_TYPE = 'V' AND NVL(att_sq."TYPE", ' NULL ') = ' OccupantsVRNotiLetter ' 
+        WHEN rec.FILE_TYPE = 'V' AND NVL(att_sq."TYPE", 'NULL') = 'OccupantsVRNotiLetter' 
         THEN '' 
         ELSE 'FILE_TYPE;
 ' 
