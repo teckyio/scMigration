@@ -96,7 +96,7 @@ SELECT rec.objectid AS objectid,
   sq.dlo_id as dlo
 FROM SDE_SQ.SQUATTERMATERIAL_PRO rec
   LEFT JOIN SQ.SQUATTER_MATERIALS s ON rec.OBJECTID = s.object_id
-  LEFT JOIN SQ.SQUATTERS sq ON s.squatter_guid = sq.id
+  LEFT JOIN SQ.SQUATTER_PENDS sq ON s.squatter_pend_guid = sq.id
   LEFT JOIN SQ.MATERIALS u ON s.MATERIAL_ID = u.id
 WHERE quantity = 0
   OR ROWNUM <= quantity;

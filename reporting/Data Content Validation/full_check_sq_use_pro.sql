@@ -95,8 +95,8 @@ SELECT rec.objectid AS objectid,
   END AS is_valid,
   sq.dlo_id as dlo
 FROM SDE_SQ.SQUATTERUSE_PRO rec
-  LEFT JOIN SQ.SQUATTER_USE_HIS s ON rec.OBJECTID = s.object_id
-  LEFT JOIN SQ.SQUATTERS sq ON s.Squatter_PEND_GUID = sq.id
+  LEFT JOIN SQ.SQUATTER_USE s ON rec.OBJECTID = s.object_id
+  LEFT JOIN SQ.SQUATTER_PENDS sq ON s.Squatter_PEND_GUID = sq.id
   LEFT JOIN SQ.USES u ON s.USE_ID = u.id
 WHERE quantity = 0
   OR ROWNUM <= quantity;
