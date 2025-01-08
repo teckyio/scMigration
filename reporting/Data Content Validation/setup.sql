@@ -1,4 +1,18 @@
-CREATE TABLE data_validation_squatter_material (
+CREATE TABLE data_validation_squatter_use_pro (
+                          objectid NUMBER,
+                          target_objectid NUMBER null,
+                          error_msg CLOB,
+                          is_valid NUMBER(1),
+                          dlo VARCHAR2(40)
+                      );
+CREATE TABLE data_validation_squatter_use_his (
+                          objectid NUMBER,
+                          target_objectid NUMBER null,
+                          error_msg CLOB,
+                          is_valid NUMBER(1),
+                          dlo VARCHAR2(40)
+                      );
+CREATE TABLE data_validation_squatter_use (
                           objectid NUMBER,
                           target_objectid NUMBER null,
                           error_msg CLOB,
@@ -6,8 +20,7 @@ CREATE TABLE data_validation_squatter_material (
                           dlo VARCHAR2(40)
                       );
 
-
-CREATE TABLE data_validation_squatter_use (
+CREATE TABLE data_validation_squatter_material_pro (
                           objectid NUMBER,
                           target_objectid NUMBER null,
                           error_msg CLOB,
@@ -23,8 +36,7 @@ CREATE TABLE data_validation_squatter_material_his (
                           dlo VARCHAR2(40)
                       );
 
-
-CREATE TABLE data_validation_squatter_use_his (
+CREATE TABLE data_validation_squatter_material (
                           objectid NUMBER,
                           target_objectid NUMBER null,
                           error_msg CLOB,

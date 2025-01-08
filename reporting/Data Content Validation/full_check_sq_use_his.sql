@@ -1,7 +1,7 @@
-TRUNCATE TABLE data_validation_squatter_use;
-DECLARE quantity INT := 0;
+TRUNCATE TABLE data_validation_squatter_use_his;
+DECLARE quantity INT := 481;
 BEGIN -- Insert data into the table with validation checks
-INSERT INTO data_validation_squatter_use (
+INSERT INTO data_validation_squatter_use_his (
     objectid,
     target_ObjectId,
     error_msg,
@@ -94,9 +94,9 @@ SELECT rec.objectid AS objectid,
     ELSE 0
   END AS is_valid,
   sq.dlo_id as dlo
-FROM SDE_SQ.SQUATTERUSE rec
-  LEFT JOIN SQ.SQUATTER_USES s ON rec.OBJECTID = s.object_id
-  LEFT JOIN SQ.SQUATTERS sq ON s.squatter_guid = sq.id
+FROM SDE_SQ.SQUATTERUSE_HIS rec
+  LEFT JOIN SQ.SQUATTER_USE_HIS s ON rec.OBJECTID = s.object_id
+  LEFT JOIN SQ.SQUATTER_HISTORIES sq ON s.Squatter_History_Id = sq.id
   LEFT JOIN SQ.USES u ON s.USE_ID = u.id
 WHERE quantity = 0
   OR ROWNUM <= quantity;
@@ -104,4 +104,4 @@ WHERE quantity = 0
 COMMIT;
 END;
 SELECT *
-FROM data_validation_squatter_use;
+FROM data_validation_squatter_use_his;
