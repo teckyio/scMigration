@@ -1,7 +1,7 @@
 TRUNCATE TABLE data_validation_attachment;
 DECLARE quantity INT := 481;
 BEGIN -- Insert validation results into the table
-INSERT INTO data_validation_attachment (objectid, target_objectid, error_msg, is_valid)
+INSERT INTO data_validation_attachment (objectid, target_objectid, error_msg, is_valid, dlo)
 SELECT rec.OBJECTID AS objectid,
     att.OBJECT_ID AS target_objectid,
     -- Concatenate error messages for mismatched fields with NVL for null handling
@@ -94,7 +94,8 @@ SELECT rec.OBJECTID AS objectid,
     END
             ) IS NULL THEN 1 
             ELSE 0 
-        END AS is_valid
+        END AS is_valid,
+    sq.dlo_id AS dlo
     FROM 
         SDE_SQ.SQUATTER_UPLOAD rec
     LEFT JOIN 

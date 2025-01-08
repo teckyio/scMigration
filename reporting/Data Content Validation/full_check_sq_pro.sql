@@ -3,7 +3,7 @@ DECLARE quantity INT := 481;
 table_count INT;
 v_dlo_id VARCHAR2(36);
 BEGIN -- Insert data into the table with validation checks
-INSERT INTO data_validation_squatter_pends (objectid, target_ObjectId, error_msg, is_valid)
+INSERT INTO data_validation_squatter_pends (objectid, target_ObjectId, error_msg, is_valid, dlo)
 SELECT rec.objectid AS objectid,
 	s.OBJECT_ID AS target_ObjectId,
 	-- Concatenate error messages for all mismatched fields
@@ -418,7 +418,8 @@ SELECT rec.objectid AS objectid,
 		END
 	) IS NULL THEN 1
 	ELSE 0
-END AS is_valid
+END AS is_valid,
+s.dlo_id AS dlo
 FROM SDE_SQ.SQUATTER_PRO rec
 	LEFT JOIN SQ.SQUATTER_PENDS s ON rec.OBJECTID = s.object_id
 WHERE quantity = 0
