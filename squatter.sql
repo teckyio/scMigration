@@ -84,7 +84,8 @@ BEGIN
                 CASE_FILE,
                 RECORD_DATE,
                 CREATED_AT,
-                UPDATED_AT
+                UPDATED_AT,
+                D_APPROVE_STATUS
             ) VALUES (
                 v_guid,
                 rec.OBJECTID, rec.SQUATTERID, rec.DIMENSION_L, rec.DIMENSION_B, rec.DIMENSION_H, 
@@ -112,7 +113,8 @@ BEGIN
                 rec.CASEFILE,
                 rec.RECORDDATE,
                 rec.CREATED_DATE,
-                rec.LAST_EDITED_DATE
+                rec.LAST_EDITED_DATE,
+                rec.APPROVE_STATUS
             );
         EXCEPTION
             WHEN OTHERS THEN

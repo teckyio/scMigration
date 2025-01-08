@@ -87,7 +87,8 @@ BEGIN
                 CASE_FILE,
                 RECORD_DATE,
                 CREATED_AT,
-                UPDATED_AT
+                UPDATED_AT,
+                D_APPROVE_STATUS
             ) VALUES (
                 rec.SQUATTER_GUID, 
                 v_guid,
@@ -115,7 +116,8 @@ BEGIN
                 rec.CASEFILE,
                 rec.RECORDDATE,
                 rec.CREATED_DATE,
-                rec.LAST_EDITED_DATE
+                rec.LAST_EDITED_DATE,
+                rec.APPROVE_STATUS
             );
         EXCEPTION
             WHEN OTHERS THEN
