@@ -210,6 +210,10 @@ SELECT rec.objectid AS objectid,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'UPDATED_AT;'
+		END || CASE
+			WHEN NVL(rec.APPROVE_STATUS,'NULL'
+			) = 'Approved' THEN ''
+			ELSE 'APPROVE_STATUS;'
 		END,
 		'; '
 	),
