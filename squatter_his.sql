@@ -79,7 +79,6 @@ INSERT INTO SQ.SQUATTER_HISTORIES (
         DLO_ID,
         FILE_NAME,
         STATUS,
-        CREATED_DATE,
         DISTRICT,
         SC_PLAN_NO,
         CREATED_USER,
@@ -113,8 +112,9 @@ INSERT INTO SQ.SQUATTER_HISTORIES (
         CLEARANCE_NO,
         AMEND_DATE,
         CASE_FILE,
-        RECORD_DATE,
+        APPROVED_WRITTEN_CREATION_DATE,
         CREATED_AT,
+        CREATION_DATE,
         UPDATED_AT,
         APPROVE_STATUS
     )
@@ -131,7 +131,6 @@ VALUES (
         v_dlo_id,
         rec.FILENAME,
         rec.STATUS,
-        rec.CREATION_DATE,
         rec.SQUATTERDISTRICT,
         rec.PLANFILENAME,
         rec.CREATED_USER,
@@ -167,6 +166,7 @@ VALUES (
         rec.CASEFILE,
         rec.RECORDDATE,
         rec.CREATED_DATE,
+        rec.CREATION_DATE
         rec.LAST_EDITED_DATE,
         CASE
             WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'APPROVED' THEN 'Approved'

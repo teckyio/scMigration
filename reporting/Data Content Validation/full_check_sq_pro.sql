@@ -199,7 +199,7 @@ SELECT rec.objectid AS objectid,
 				rec.RECORDDATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.record_date,
+				s.APPROVED_WRITTEN_CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'RECORD_DATE;'
@@ -212,6 +212,15 @@ SELECT rec.objectid AS objectid,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'CREATED_DATE;'
+		END || CASE
+				WHEN NVL(
+					rec.CREATION_DATE,
+					TO_DATE('1900-01-01', 'YYYY-MM-DD')
+				) = NVL(
+					s.CREATION_DATE,
+					TO_DATE('1900-01-01', 'YYYY-MM-DD')
+				) THEN ''
+				ELSE 'CREATION_DATE;'
 		END || CASE
 			WHEN NVL(
 				rec.LAST_EDITED_DATE,
@@ -229,9 +238,9 @@ SELECT rec.objectid AS objectid,
 			ELSE 'APPROVE_STATUS'
 		END || CASE
 			WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'UPDATE_PENDING'
-			AND NVL(s.APPROVE_STATUS) = 'Update' THEN ''
+			AND NVL(s.APPROVE_TYPE) = 'Update' THEN ''
 			WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'DELETE_PENDING'
-			AND NVL(s.APPROVE_STATUS) = 'Delete' THEN ''
+			AND NVL(s.APPROVE_TYPE) = 'Delete' THEN ''
 			ELSE 'APPROVE_TYPE'
 		END,
 		'; '
@@ -423,7 +432,7 @@ SELECT rec.objectid AS objectid,
 					rec.RECORDDATE,
 					TO_DATE('1900-01-01', 'YYYY-MM-DD')
 				) = NVL(
-					s.record_date,
+					s.APPROVED_WRITTEN_CREATION_DATE,
 					TO_DATE('1900-01-01', 'YYYY-MM-DD')
 				) THEN ''
 				ELSE 'RECORD_DATE;'
@@ -435,7 +444,16 @@ SELECT rec.objectid AS objectid,
 					s.created_at,
 					TO_DATE('1900-01-01', 'YYYY-MM-DD')
 				) THEN ''
-				ELSE 'CREATED_DATE;'
+			ELSE 'CREATED_DATE;'
+							END || CASE
+				WHEN NVL(
+					rec.CREATION_DATE,
+					TO_DATE('1900-01-01', 'YYYY-MM-DD')
+				) = NVL(
+					s.CREATION_DATE,
+					TO_DATE('1900-01-01', 'YYYY-MM-DD')
+				) THEN ''
+				ELSE 'CREATION_DATE;'
 			END || CASE
 				WHEN NVL(
 					rec.LAST_EDITED_DATE,
@@ -450,15 +468,15 @@ SELECT rec.objectid AS objectid,
 				ELSE 'APPROVE_STATUS;'
 			END || CASE
 				WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'UPDATE_PENDING'
-				AND NVL(s.APPROVE_STATUS) = 'PendingApprover' THEN ''
+				AND NVL(s.APPROVE_TYPE) = 'PendingApprover' THEN ''
 				WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'DELETE_PENDING'
-				AND NVL(s.APPROVE_STATUS) = 'PendingApprover' THEN ''
+				AND NVL(s.APPROVE_TYPE) = 'PendingApprover' THEN ''
 				ELSE 'APPROVE_STATUS'
 			END || CASE
 				WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'UPDATE_PENDING'
-				AND NVL(s.APPROVE_STATUS) = 'Update' THEN ''
+				AND NVL(s.APPROVE_TYPE) = 'Update' THEN ''
 				WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'DELETE_PENDING'
-				AND NVL(s.APPROVE_STATUS) = 'Delete' THEN ''
+				AND NVL(s.APPROVE_TYPE) = 'Delete' THEN ''
 				ELSE 'APPROVE_TYPE'
 			END
 		) IS NULL THEN 1
