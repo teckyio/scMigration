@@ -45,7 +45,6 @@ BEGIN
                     rec.created_date,
                     rec.last_edited_date,
                     rec.OBJECTID,
-                    rec.OBJECTID1,
                     rec.GLOBALID,
                     rec.SQUATTERMATERIALID,
                     rec.created_user,

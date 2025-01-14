@@ -14,7 +14,7 @@ BEGIN
             created_user,
             created_date,
             last_edited_user,
-            last_edited_date,
+            last_edited_date
             VERSION
         FROM SDE_SQ.SQUATTERMATERIAL
     ) LOOP
@@ -67,10 +67,9 @@ BEGIN
             IF v_count = 0 THEN
                 -- Get the current max SORTING_INDEX
                 SELECT NVL(MAX(SORTING_INDEX), 0) + 1 INTO v_max_sorting_index FROM SQ.MATERIALS;
-
+                generate_Formatted_GUID(v_guid);
                 -- Insert into the MATERIAL table
                 INSERT INTO SQ.MATERIALS (ID, NAME, DISPLAY_NAME, SORTING_INDEX, CREATED_AT, UPDATED_AT)
-                generate_Formatted_GUID(v_guid);
                 VALUES (v_guid, rec.MATERIALS, rec.MATERIALS, v_max_sorting_index,SYSDATE, SYSDATE);
                 COMMIT;
             END IF;
