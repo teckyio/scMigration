@@ -122,6 +122,7 @@ VALUES (
         rec.SQUATTER_GUID,
         v_guid,
         rec.OBJECTID,
+        rec.OBJECTID_1,
         rec.SQUATTERID,
         rec.DIMENSION_L,
         rec.DIMENSION_B,
