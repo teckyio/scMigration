@@ -103,7 +103,7 @@ INSERT INTO SQUATTERS (
         CASE_FILE,
         APPROVED_WRITTEN_CREATION_DATE,
         CREATED_AT,
-        CREATION_DATE,
+        CREATED_DATE,
         UPDATED_AT,
         APPROVE_STATUS
     )
@@ -162,7 +162,7 @@ VALUES (
     );
 END IF; EXCEPTION
 WHEN OTHERS THEN v_error_message := SQLERRM;
-log_error('SQUATTERS', v_error_message, rec.OBJECT_ID);
+log_error('SQUATTERS', v_error_message, rec.OBJECTID);
 CONTINUE;
 END;
 END LOOP;
