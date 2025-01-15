@@ -217,7 +217,7 @@ SELECT rec.objectid AS objectid,
 				rec.CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.CREATION_DATE,
+				s.CREATED_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'CREATION_DATE;'
@@ -441,7 +441,7 @@ SELECT rec.objectid AS objectid,
 					rec.CREATION_DATE,
 					TO_DATE('1900-01-01', 'YYYY-MM-DD')
 				) = NVL(
-					s.CREATION_DATE,
+					s.CREATED_DATE,
 					TO_DATE('1900-01-01', 'YYYY-MM-DD')
 				) THEN ''
 				ELSE 'CREATION_DATE;'
