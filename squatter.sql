@@ -103,7 +103,7 @@ INSERT INTO SQUATTERS (
         CASE_FILE,
         APPROVED_WRITTEN_CREATION_DATE,
         CREATED_AT,
-        CREATED_DATE,
+        RECORD_DATE,
         UPDATED_AT,
         APPROVE_STATUS
     )
@@ -151,9 +151,9 @@ VALUES (
         rec.CLEARANCE_NO,
         rec.AMEND_DATE,
         rec.CASEFILE,
-        rec.RECORDDATE,
-        rec.CREATED_DATE,
         rec.CREATION_DATE,
+        rec.CREATED_DATE,
+        rec.RECORD_DATE,
         rec.LAST_EDITED_DATE,
         CASE
             WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'APPROVED' THEN 'Approved'
