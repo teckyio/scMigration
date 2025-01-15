@@ -199,7 +199,7 @@ SELECT rec.objectid AS objectid,
 				rec.RECORDDATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.APPROVED_WRITTEN_CREATION_DATE,
+				s.RECORD_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'RECORD_DATE;'
@@ -217,7 +217,7 @@ SELECT rec.objectid AS objectid,
 				rec.CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.CREATED_DATE,
+				s.APPROVED_WRITTEN_CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'CREATION_DATE;'
@@ -423,7 +423,7 @@ SELECT rec.objectid AS objectid,
 				rec.RECORDDATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.APPROVED_WRITTEN_CREATION_DATE,
+				s.RECORD_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'RECORD_DATE;'
@@ -441,7 +441,7 @@ SELECT rec.objectid AS objectid,
 				rec.CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.CREATED_DATE,
+				s.APPROVED_WRITTEN_CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'CREATION_DATE;'
