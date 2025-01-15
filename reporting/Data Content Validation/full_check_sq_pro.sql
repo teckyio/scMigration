@@ -464,19 +464,16 @@ SELECT rec.objectid AS objectid,
 				) THEN ''
 				ELSE 'UPDATED_AT;'
 			END || CASE
-				WHEN NVL(rec.APPROVE_STATUS, 'NULL') = NVL(rec.APPROVE_STATUS, 'NULL') THEN ''
-				ELSE 'APPROVE_STATUS;'
-			END || CASE
 				WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'UPDATE_PENDING'
-				AND NVL(s.APPROVE_TYPE) = 'PendingApprover' THEN ''
+				AND NVL(s.APPROVE_TYPE, 'NULL') = 'PendingApprover' THEN ''
 				WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'DELETE_PENDING'
-				AND NVL(s.APPROVE_TYPE) = 'PendingApprover' THEN ''
+				AND NVL(s.APPROVE_TYPE, 'NULL') = 'PendingApprover' THEN ''
 				ELSE 'APPROVE_STATUS'
 			END || CASE
 				WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'UPDATE_PENDING'
-				AND NVL(s.APPROVE_TYPE) = 'Update' THEN ''
+				AND NVL(s.APPROVE_TYPE, 'NULL') = 'Update' THEN ''
 				WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'DELETE_PENDING'
-				AND NVL(s.APPROVE_TYPE) = 'Delete' THEN ''
+				AND NVL(s.APPROVE_TYPE, 'NULL') = 'Delete' THEN ''
 				ELSE 'APPROVE_TYPE'
 			END
 		) IS NULL THEN 1
