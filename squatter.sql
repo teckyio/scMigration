@@ -153,7 +153,7 @@ VALUES (
         rec.CASEFILE,
         rec.CREATION_DATE,
         rec.CREATED_DATE,
-        rec.RECORD_DATE,
+        rec.RECORDDATE,
         rec.LAST_EDITED_DATE,
         CASE
             WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'APPROVED' THEN 'Approved'
