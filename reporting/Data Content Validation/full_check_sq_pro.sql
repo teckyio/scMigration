@@ -1,5 +1,5 @@
 TRUNCATE TABLE data_validation_squatter_pends;
-DECLARE quantity INT := 481;
+DECLARE quantity INT := 0;
 table_count INT;
 v_dlo_id VARCHAR2(36);
 BEGIN -- Insert data into the table with validation checks
@@ -30,11 +30,11 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.DIMENSION_H, -1) = NVL(s.dimensions_h, -1) THEN ''
 			ELSE 'DIMENSIONS_H'
 		END || CASE
-			WHEN NVL(rec.LOCATION, 'NULL') = NVL(s.survey_location, 'NULL') THEN ''
-			ELSE 'SURVEY_LOCATION;'
+			WHEN NVL(rec.LOCATION, 'NULL') = NVL(s.SQUATTER_LOCATION, 'NULL') THEN ''
+			ELSE 'LOCATION;'
 		END || CASE
 			WHEN NVL(rec.FILENAME, 'NULL') = NVL(s.file_name, 'NULL') THEN ''
-			ELSE 'FILE_NAME;'
+			ELSE 'FILENAME;'
 		END || CASE
 			WHEN NVL(rec.STATUS, 'NULL') = NVL(s.status, 'NULL') THEN ''
 			ELSE 'STATUS;'
@@ -43,7 +43,7 @@ SELECT rec.objectid AS objectid,
 			ELSE 'DISTRICT;'
 		END || CASE
 			WHEN NVL(rec.PLANFILENAME, 'NULL') = NVL(s.SC_PLAN_NO, 'NULL') THEN ''
-			ELSE 'PLAN_FILE_NAME;'
+			ELSE 'PLANFILENAME;'
 		END || CASE
 			WHEN NVL(rec.CREATED_USER, 'NULL') = NVL(s.created_user, 'NULL') THEN ''
 			ELSE 'CREATED_USER;'
@@ -72,8 +72,8 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.SURVEYNO, 'NULL') = NVL(s.survey_no, 'NULL') THEN ''
 			ELSE 'SURVEY_NO;'
 		END || CASE
-			WHEN NVL(rec.FILEREF, 'NULL') = NVL(s.case_reference, 'NULL') THEN ''
-			ELSE 'CASE_REFERENCE;'
+			WHEN NVL(rec.FILEREF, 'NULL') = NVL(s.FILEREF, 'NULL') THEN ''
+			ELSE 'FILEREF;'
 		END || CASE
 			WHEN NVL(rec.ISSUE, -1) = NVL(s.DATA_PROBLEM, -1) THEN ''
 			ELSE 'ISSUE;'
@@ -118,7 +118,7 @@ SELECT rec.objectid AS objectid,
 				rec.DELETE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.delete_date,
+				s.APPROVED_WRITTEN_DELETE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'DELETE_DATE;'
@@ -127,7 +127,7 @@ SELECT rec.objectid AS objectid,
 				rec.REINSTATE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.re_instate_date,
+				s.APPROVED_WRITTEN_REINSTATE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'RE_INSTATE_DATE;'
@@ -142,7 +142,7 @@ SELECT rec.objectid AS objectid,
 				rec.APPROVED_CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.approved_creation_date,
+				s.APPROVED_CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'APPROVED_CREATION_DATE;'
@@ -151,7 +151,7 @@ SELECT rec.objectid AS objectid,
 				rec.APPROVED_DELETE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.approved_delete_date,
+				s.APPROVED_DELETE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'APPROVED_DELETE_DATE;'
@@ -160,7 +160,7 @@ SELECT rec.objectid AS objectid,
 				rec.APPROVED_REINSTATE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.approved_reinstate_date,
+				s.APPROVED_REINSTATE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'APPROVED_REINSTATE_DATE;'
@@ -169,7 +169,7 @@ SELECT rec.objectid AS objectid,
 				rec.APPROVED_AMEND_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.approved_amendment_date,
+				s.APPROVED_AMEND_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'APPROVED_AMENDMENT_DATE;'
@@ -184,7 +184,7 @@ SELECT rec.objectid AS objectid,
 				rec.AMEND_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.amend_date,
+				s.APPROVED_WRITTEN_AMENDMENT_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'AMEND_DATE;'
@@ -199,7 +199,7 @@ SELECT rec.objectid AS objectid,
 				rec.RECORDDATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.RECORD_DATE,
+				s.HD161FORM_RECORD_DATE_RAW,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'RECORD_DATE;'
@@ -263,7 +263,7 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.DIMENSION_H, -1) = NVL(s.dimensions_h, -1) THEN ''
 			ELSE 'DIMENSIONS_H'
 		END || CASE
-			WHEN NVL(rec.LOCATION, 'NULL') = NVL(s.survey_location, 'NULL') THEN ''
+			WHEN NVL(rec.LOCATION, 'NULL') = NVL(s.SQUATTER_LOCATION, 'NULL') THEN ''
 			ELSE 'SURVEY_LOCATION;'
 		END || CASE
 			WHEN NVL(rec.FILENAME, 'NULL') = NVL(s.file_name, 'NULL') THEN ''
@@ -305,8 +305,8 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(rec.SURVEYNO, 'NULL') = NVL(s.survey_no, 'NULL') THEN ''
 			ELSE 'SURVEY_NO;'
 		END || CASE
-			WHEN NVL(rec.FILEREF, 'NULL') = NVL(s.case_reference, 'NULL') THEN ''
-			ELSE 'CASE_REFERENCE;'
+			WHEN NVL(rec.FILEREF, 'NULL') = NVL(s.FILEREF, 'NULL') THEN ''
+			ELSE 'FILEREF;'
 		END || CASE
 			WHEN NVL(rec.ISSUE, -1) = NVL(s.DATA_PROBLEM, -1) THEN ''
 			ELSE 'ISSUE;'
@@ -351,7 +351,7 @@ SELECT rec.objectid AS objectid,
 				rec.DELETE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.delete_date,
+				s.APPROVED_WRITTEN_DELETE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'DELETE_DATE;'
@@ -360,7 +360,7 @@ SELECT rec.objectid AS objectid,
 				rec.REINSTATE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.re_instate_date,
+				s.APPROVED_WRITTEN_REINSTATE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'RE_INSTATE_DATE;'
@@ -375,7 +375,7 @@ SELECT rec.objectid AS objectid,
 				rec.APPROVED_CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.approved_creation_date,
+				s.APPROVED_CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'APPROVED_CREATION_DATE;'
@@ -384,7 +384,7 @@ SELECT rec.objectid AS objectid,
 				rec.APPROVED_DELETE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.approved_delete_date,
+				s.APPROVED_DELETE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'APPROVED_DELETE_DATE;'
@@ -393,7 +393,7 @@ SELECT rec.objectid AS objectid,
 				rec.APPROVED_REINSTATE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.approved_reinstate_date,
+				s.APPROVED_REINSTATE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'APPROVED_REINSTATE_DATE;'
@@ -402,22 +402,22 @@ SELECT rec.objectid AS objectid,
 				rec.APPROVED_AMEND_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.approved_amendment_date,
+				s.APPROVED_AMEND_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'APPROVED_AMENDMENT_DATE;'
 		END || CASE
-			WHEN NVL(rec.JOBNO, 'NULL') = NVL(s.job_no, 'NULL') THEN ''
+			WHEN NVL(rec.JOBNO, 'NULL') = NVL(s.JOBNO, 'NULL') THEN ''
 			ELSE 'JOB_NO;'
 		END || CASE
-			WHEN NVL(rec.CLEARANCE_NO, 'NULL') = NVL(s.clearance_no, 'NULL') THEN ''
+			WHEN NVL(rec.CLEARANCE_NO, 'NULL') = NVL(s.CLEARANCE_NO, 'NULL') THEN ''
 			ELSE 'CLEARANCE_NO;'
 		END || CASE
 			WHEN NVL(
 				rec.AMEND_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.amend_date,
+				s.APPROVED_WRITTEN_AMENDMENT_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'AMEND_DATE;'
@@ -432,7 +432,7 @@ SELECT rec.objectid AS objectid,
 				rec.RECORDDATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.RECORD_DATE,
+				s.HD161FORM_RECORD_DATE_RAW,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'RECORD_DATE;'
