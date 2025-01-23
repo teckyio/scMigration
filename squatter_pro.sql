@@ -3,7 +3,6 @@ v_guid VARCHAR2(36);
 v_dlo_id VARCHAR2(36);
 BEGIN FOR rec IN (
     SELECT sh.OBJECTID,
-        sh.OBJECTID_1,
         sh.SQUATTERID,
         sh.DIMENSION_L,
         sh.DIMENSION_B,
@@ -50,23 +49,22 @@ BEGIN FOR rec IN (
         sh.APPROVED_REINSTATE_DATE,
         sh.APPROVED_AMEND_DATE,
         s.ID AS SQUATTER_GUID
-    FROM SDE_SQ.SQUATTER_HIS sh
+    FROM SDE_SQ.SQUATTER_PRO sh
         LEFT JOIN SQ.SQUATTERS s ON sh.SQUATTERID = s.SQUATTER_ID
 ) LOOP BEGIN 
 generate_Formatted_GUID(v_guid);
 find_dlo_id(rec.DLOOFFICE, v_dlo_id);
-IF NVL(rec.APPROVE_STATUS, 'NULL') != 'APPROVED' THEN log_error(
+IF NVL(rec.APPROVE_STATUS, 'NULL') != 'UPDATE_PENDING'
+AND NVL(rec.APPROVE_STATUS, 'NOT_APPROERRORVED') != 'DELETE_PENDING' THEN log_error(
     'SQUATTER_HIS',
     'Skipped due to invalid APPROVE_STATUS',
     rec.OBJECTID
 );
-ELSE
--- Insert into new table
-INSERT INTO SQ.SQUATTER_HISTORIES (
+ELSE -- Insert into new table
+INSERT INTO SQ.SQUATTER_PENDS (
         SQUATTER_GUID,
         ID,
         OBJECT_ID,
-        OBJECT_ID1,
         SQUATTER_ID,
         DIMENSIONS_L,
         DIMENSIONS_B,
@@ -112,13 +110,13 @@ INSERT INTO SQ.SQUATTER_HISTORIES (
         CREATED_AT,
         HD161FORM_RECORD_DATE_RAW,
         UPDATED_AT,
-        APPROVE_STATUS
+        APPROVE_STATUS,
+        APPROVE_TYPE
     )
 VALUES (
         rec.SQUATTER_GUID,
         v_guid,
         rec.OBJECTID,
-        rec.OBJECTID_1,
         rec.SQUATTERID,
         rec.DIMENSION_L,
         rec.DIMENSION_B,
@@ -165,14 +163,20 @@ VALUES (
         rec.RECORDDATE,
         rec.LAST_EDITED_DATE,
         CASE
-            WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'APPROVED' THEN 'Approved'
+            WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'UPDATE_PENDING' THEN 'PendingApprover'
+            WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'DELETE_PENDING' THEN 'PendingApprover'
+            ELSE 'ERROR'
+        END,
+        CASE
+            WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'UPDATE_PENDING' THEN 'Update'
+            WHEN NVL(rec.APPROVE_STATUS, 'NULL') = 'DELETE_PENDING' THEN 'Delete'
             ELSE 'ERROR'
         END
-    );
-    END IF;
+        );
+END IF;
 EXCEPTION
 WHEN OTHERS THEN v_error_message := SQLERRM;
-log_error('SQUATTERS_HIS', v_error_message, rec.OBJECTID);
+log_error('SQUATTERS_PRO', v_error_message, rec.OBJECTID);
 CONTINUE;
 END;
 END LOOP;
