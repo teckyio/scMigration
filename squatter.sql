@@ -50,23 +50,20 @@ BEGIN FOR rec IN (
         sh.APPROVED_REINSTATE_DATE,
         sh.APPROVED_AMEND_DATE,
         s.ID AS SQUATTER_GUID
-    FROM SDE_SQ.SQUATTER_HIS sh
-        LEFT JOIN SQ.SQUATTERS s ON sh.SQUATTERID = s.SQUATTER_ID
+    FROM SDE_SQ.SQUATTER sh
 ) LOOP BEGIN 
 generate_Formatted_GUID(v_guid);
 find_dlo_id(rec.DLOOFFICE, v_dlo_id);
 IF NVL(rec.APPROVE_STATUS, 'NULL') != 'APPROVED' THEN log_error(
-    'SQUATTER_HIS',
+    'SQUATTER',
     'Skipped due to invalid APPROVE_STATUS',
     rec.OBJECTID
 );
 ELSE
 -- Insert into new table
-INSERT INTO SQ.SQUATTER_HISTORIES (
-        SQUATTER_GUID,
+INSERT INTO SQ.SQUATTERS (
         ID,
         OBJECT_ID,
-        OBJECT_ID1,
         SQUATTER_ID,
         DIMENSIONS_L,
         DIMENSIONS_B,
@@ -115,10 +112,8 @@ INSERT INTO SQ.SQUATTER_HISTORIES (
         APPROVE_STATUS
     )
 VALUES (
-        rec.SQUATTER_GUID,
         v_guid,
         rec.OBJECTID,
-        rec.OBJECTID_1,
         rec.SQUATTERID,
         rec.DIMENSION_L,
         rec.DIMENSION_B,
