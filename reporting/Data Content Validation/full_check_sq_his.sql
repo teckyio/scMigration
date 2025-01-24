@@ -130,7 +130,7 @@ SELECT rec.objectid AS objectid,
 				s.APPROVED_WRITTEN_REINSTATE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
-			ELSE 'RE_INSTATE_DATE;'
+			ELSE 'REINSTATE_DATE;'
 		END || CASE
 			WHEN NVL(rec.VERSION, -1) = NVL(s.version, -1) THEN ''
 			ELSE 'VERSION;'
@@ -172,12 +172,12 @@ SELECT rec.objectid AS objectid,
 				s.APPROVED_AMENDMENT_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
-			ELSE 'APPROVED_AMEND_DATE;'
+			ELSE 'APPROVED_AMENDMENT_DATE;'
 		END || CASE
-			WHEN NVL(rec.JOBNO, 'NULL') = NVL(s.job_no, 'NULL') THEN ''
+			WHEN NVL(rec.JOBNO, 'NULL') = NVL(s.JOB_NO, 'NULL') THEN ''
 			ELSE 'JOB_NO;'
 		END || CASE
-			WHEN NVL(rec.CLEARANCE_NO, 'NULL') = NVL(s.clearance_no, 'NULL') THEN ''
+			WHEN NVL(rec.CLEARANCE_NO, 'NULL') = NVL(s.CLEARANCE_NO, 'NULL') THEN ''
 			ELSE 'CLEARANCE_NO;'
 		END || CASE
 			WHEN NVL(
@@ -199,7 +199,7 @@ SELECT rec.objectid AS objectid,
 				rec.RECORDDATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.RECORD_DATE,
+				s.HD161FORM_RECORD_DATE_RAW,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'RECORD_DATE;'
@@ -235,9 +235,9 @@ SELECT rec.objectid AS objectid,
 			ELSE 'APPROVE_STATUS;'
 		END,
 		'; '
-	),
-	CASE
-		WHEN (
+	) AS error_msg,
+	CASE WHEN
+	RTRIM(
 		CASE
 			WHEN rec.OBJECTID = s.OBJECT_ID THEN ''
 			ELSE 'OBJECT_ID;'
@@ -258,7 +258,7 @@ SELECT rec.objectid AS objectid,
 			ELSE 'LOCATION;'
 		END || CASE
 			WHEN NVL(rec.FILENAME, 'NULL') = NVL(s.file_name, 'NULL') THEN ''
-			ELSE 'FILE_NAME;'
+			ELSE 'FILENAME;'
 		END || CASE
 			WHEN NVL(rec.STATUS, 'NULL') = NVL(s.status, 'NULL') THEN ''
 			ELSE 'STATUS;'
@@ -267,7 +267,7 @@ SELECT rec.objectid AS objectid,
 			ELSE 'DISTRICT;'
 		END || CASE
 			WHEN NVL(rec.PLANFILENAME, 'NULL') = NVL(s.SC_PLAN_NO, 'NULL') THEN ''
-			ELSE 'PLAN_FILE_NAME;'
+			ELSE 'PLANFILENAME;'
 		END || CASE
 			WHEN NVL(rec.CREATED_USER, 'NULL') = NVL(s.created_user, 'NULL') THEN ''
 			ELSE 'CREATED_USER;'
@@ -354,7 +354,7 @@ SELECT rec.objectid AS objectid,
 				s.APPROVED_WRITTEN_REINSTATE_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
-			ELSE 'RE_INSTATE_DATE;'
+			ELSE 'REINSTATE_DATE;'
 		END || CASE
 			WHEN NVL(rec.VERSION, -1) = NVL(s.version, -1) THEN ''
 			ELSE 'VERSION;'
@@ -366,7 +366,7 @@ SELECT rec.objectid AS objectid,
 				rec.APPROVED_CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.approved_creation_date,
+				s.APPROVED_CREATION_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'APPROVED_CREATION_DATE;'
@@ -393,12 +393,12 @@ SELECT rec.objectid AS objectid,
 				rec.APPROVED_AMEND_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) = NVL(
-				s.APPROVED_AMEND_DATE,
+				s.APPROVED_AMENDMENT_DATE,
 				TO_DATE('1900-01-01', 'YYYY-MM-DD')
 			) THEN ''
 			ELSE 'APPROVED_AMENDMENT_DATE;'
 		END || CASE
-			WHEN NVL(rec.JOBNO, 'NULL') = NVL(s.JOBNO, 'NULL') THEN ''
+			WHEN NVL(rec.JOBNO, 'NULL') = NVL(s.JOB_NO, 'NULL') THEN ''
 			ELSE 'JOB_NO;'
 		END || CASE
 			WHEN NVL(rec.CLEARANCE_NO, 'NULL') = NVL(s.CLEARANCE_NO, 'NULL') THEN ''
@@ -458,16 +458,17 @@ SELECT rec.objectid AS objectid,
 			WHEN NVL(s.APPROVE_STATUS, 'NULL') = 'Approved' THEN ''
 			ELSE 'APPROVE_STATUS;'
 		END
-		) IS NULL THEN 1
+	)
+		IS NULL THEN 1
 		ELSE 0
-	END AS is_valid,
-	s.dlo_id as dlo
+END AS is_valid,
+s.dlo_id AS dlo
 FROM SDE_SQ.SQUATTER_HIS rec
-	LEFT JOIN SQ.SQUATTER_HISTORIES s ON rec.OBJECTID = s.object_id
+	LEFT JOIN SQUATTER_HISTORIES s ON rec.OBJECTID = s.object_id
 WHERE quantity = 0
 	OR ROWNUM <= quantity;
 -- Commit transaction
 COMMIT;
 END;
 SELECT *
-FROM data_validation_squatter_hisTORIES;
+FROM data_validation_squatter_histories;

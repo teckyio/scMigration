@@ -407,7 +407,7 @@ SELECT rec.objectid AS objectid,
 			) THEN ''
 			ELSE 'APPROVED_AMENDMENT_DATE;'
 		END || CASE
-			WHEN NVL(rec.JOBNO, 'NULL') = NVL(s.JOBNO, 'NULL') THEN ''
+			WHEN NVL(rec.JOBNO, 'NULL') = NVL(s.JOB_NO, 'NULL') THEN ''
 			ELSE 'JOB_NO;'
 		END || CASE
 			WHEN NVL(rec.CLEARANCE_NO, 'NULL') = NVL(s.CLEARANCE_NO, 'NULL') THEN ''
