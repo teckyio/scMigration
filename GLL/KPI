@@ -1,0 +1,46 @@
+SELECT COUNT(DISTINCT g.GLL_NO)
+FROM GLL g
+LEFT JOIN LicenseAndPermitPoly lp ON g.GLL_NO = lp.LicenseAndPermitNUMBER
+LEFT JOIN LicenseAndPermitLine ll ON g.GLL_NO = ll.LicenseAndPermitNUMBER
+WHERE 
+    (
+        -- Check if every LicenseAndPermitPolyID is in Polygon
+        lp.LicenseAndPermitPolyID IS NOT NULL 
+        AND NOT EXISTS (
+            SELECT 1 
+            FROM JSON_TABLE(g.Polygon, '$[*]' COLUMNS(value VARCHAR(255) PATH '$')) j
+            WHERE j.value = lp.LicenseAndPermitPolyID
+        )
+    )
+    OR
+    (
+        -- Check if every LicenseAndPermitLineID is in Polyline
+        ll.LicenseAndPermitLineID IS NOT NULL 
+        AND NOT EXISTS (
+            SELECT 1 
+            FROM JSON_TABLE(g.Polyline, '$[*]' COLUMNS(value VARCHAR(255) PATH '$')) j
+            WHERE j.value = ll.LicenseAndPermitLineID
+        )
+    )
+    OR
+    (
+        -- Check if all values in Polygon exist in LicenseAndPermitPoly
+        g.Polygon IS NOT NULL
+        AND EXISTS (
+            SELECT 1
+            FROM JSON_TABLE(g.Polygon, '$[*]' COLUMNS(value VARCHAR(255) PATH '$')) j
+            LEFT JOIN LicenseAndPermitPoly lp2 ON j.value = lp2.LicenseAndPermitPolyID
+            WHERE lp2.LicenseAndPermitPolyID IS NULL
+        )
+    )
+    OR
+    (
+        -- Check if all values in Polyline exist in LicenseAndPermitLine
+        g.Polyline IS NOT NULL
+        AND EXISTS (
+            SELECT 1
+            FROM JSON_TABLE(g.Polyline, '$[*]' COLUMNS(value VARCHAR(255) PATH '$')) j
+            LEFT JOIN LicenseAndPermitLine ll2 ON j.value = ll2.LicenseAndPermitLineID
+            WHERE ll2.LicenseAndPermitLineID IS NULL
+        )
+    );

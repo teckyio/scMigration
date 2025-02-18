@@ -3,7 +3,6 @@ v_guid VARCHAR2(36);
 v_dlo_id VARCHAR2(36);
 BEGIN FOR rec IN (
     SELECT sh.OBJECTID,
-        sh.OBJECTID_1,
         sh.SQUATTERID,
         sh.DIMENSION_L,
         sh.DIMENSION_B,
