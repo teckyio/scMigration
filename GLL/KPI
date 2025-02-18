@@ -1,28 +1,8 @@
-SELECT COUNT(DISTINCT g.GLL_NO)
-FROM GLL g
+            SELECT COUNT(DISTINCT lp.GLL_NO)
+FROM LICENCEANDPERMIT lp
+LEFT JOIN LICENCEANDPERMITPOLY poly ON lp.LICENCEANDPERMITPOLYID = poly.LICENCEANDPERMITPOLYID
+LEFT JOIN LICENCEANDPERMITLINE line ON lp.LICENCEANDPERMITLINEID = line.LICENCEANDPERMITLINEID
 WHERE 
-    EXISTS (
-        -- Check LicenceAndPermitPoly misalignment
-        SELECT 1 FROM LicenceAndPermitPoly lp
-        WHERE lp.LicenceAndPermitNUMBER = g.GLL_NO
-        AND NOT EXISTS (
-            SELECT 1 FROM (
-                SELECT REGEXP_SUBSTR(g.Polygon, '[^,]+', 1, LEVEL) AS PolyID
-                FROM DUAL CONNECT BY REGEXP_SUBSTR(g.Polygon, '[^,]+', 1, LEVEL) IS NOT NULL
-            ) extracted
-            WHERE extracted.PolyID = lp.LicenceAndPermitPolyID
-        )
-    )
-    OR
-    EXISTS (
-        -- Check LicenceAndPermitLine misalignment
-        SELECT 1 FROM LicenceAndPermitLine ll
-        WHERE ll.LicenceAndPermitNUMBER = g.GLL_NO
-        AND NOT EXISTS (
-            SELECT 1 FROM (
-                SELECT REGEXP_SUBSTR(g.Polyline, '[^,]+', 1, LEVEL) AS LineID
-                FROM DUAL CONNECT BY REGEXP_SUBSTR(g.Polyline, '[^,]+', 1, LEVEL) IS NOT NULL
-            ) extracted
-            WHERE extracted.LineID = ll.LicenceAndPermitLineID
-        )
-    );
+    (lp.TYPE = 'POLYGON' AND NVL(lp.LICENCEANDPERMITPOLYID, 'NULL') != NVL(TO_CHAR(poly.LICENCEANDPERMITPOLYID), 'NULL'))
+    OR 
+    (lp.TYPE = 'POLYLINE' AND NVL(lp.LICENCEANDPERMITLINEID, 'NULL') != NVL(TO_CHAR(line.LICENCEANDPERMITLINEID), 'NULL'))";
