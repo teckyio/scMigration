@@ -1,5 +1,5 @@
 TRUNCATE TABLE data_validation_squatter_use_his;
-DECLARE quantity INT := 481;
+DECLARE quantity INT := 0;
 BEGIN -- Insert data into the table with validation checks
 INSERT INTO data_validation_squatter_use_his (
     objectid,

@@ -1,5 +1,5 @@
 TRUNCATE TABLE data_validation_squatters;
-DECLARE quantity INT := 481;
+DECLARE quantity INT := 0;
 table_count INT;
 v_dlo_id VARCHAR2(36);
 BEGIN -- Insert data into the table with validation checks

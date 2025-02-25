@@ -1,5 +1,5 @@
 TRUNCATE TABLE data_validation_attachment;
-DECLARE quantity INT := 481;
+DECLARE quantity INT := 0;
 BEGIN -- Insert validation results into the table
 INSERT INTO data_validation_attachment (objectid, target_objectid, error_msg, is_valid, dlo)
 SELECT rec.OBJECTID AS objectid,
@@ -28,9 +28,9 @@ SELECT rec.OBJECTID AS objectid,
             WHEN NVL(
                 CASE
                     WHEN rec.FILE_TYPE = 'N'
-                    AND NVL(att_sq."TYPE", 'NULL') = 'RepairRebuildNoti' THEN ''
+                    AND NVL(att_sq."TYPE", 'NULL') = 'RepairRebuildNoti' THEN 'RepairRebuildNoti'
                     WHEN rec.FILE_TYPE = 'V'
-                    AND NVL(att_sq."TYPE", 'NULL') = 'OccupantsVRNotiLetter' THEN ''
+                    AND NVL(att_sq."TYPE", 'NULL') = 'OccupantsVRNotiLetter' THEN 'OccupantsVRNotiLetter'
                     ELSE 'NULL;'
                 END || '\' || rec.DLO || '\' || rec.SQUATTERID || '\' || rec.NAME, 
             'NULL'
@@ -74,13 +74,13 @@ SELECT rec.OBJECTID AS objectid,
         WHEN NVL(
             CASE 
                 WHEN rec.FILE_TYPE = 'N' AND NVL(att_sq."TYPE", 'NULL') = 'RepairRebuildNoti' 
-                THEN '' 
+                THEN 'RepairRebuildNoti' 
                 WHEN rec.FILE_TYPE = 'V' AND NVL(att_sq."TYPE", 'NULL') = 'OccupantsVRNotiLetter' 
-                THEN '' 
+                THEN 'OccupantsVRNotiLetter' 
                 ELSE 'NULL;
 ' 
-            END || ' \ ' || rec.DLO || ' \ ' || rec.SQUATTERID || ' \ ' || rec.NAME, 
-            ' NULL '
+            END || '\' || rec.DLO || '\' || rec.SQUATTERID || '\' || rec.NAME, 
+            'NULL'
         ) = NVL(att."URL", 'NULL') 
         THEN '' 
         ELSE 'URL;
