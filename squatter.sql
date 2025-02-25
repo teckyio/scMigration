@@ -47,8 +47,7 @@ BEGIN FOR rec IN (
         sh.APPROVED_CREATION_DATE,
         sh.APPROVED_DELETE_DATE,
         sh.APPROVED_REINSTATE_DATE,
-        sh.APPROVED_AMEND_DATE,
-        s.ID AS SQUATTER_GUID
+        sh.APPROVED_AMEND_DATE
     FROM SDE_SQ.SQUATTER sh
 ) LOOP BEGIN 
 generate_Formatted_GUID(v_guid);

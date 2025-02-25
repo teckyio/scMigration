@@ -62,12 +62,13 @@ BEGIN
                 rec.CREATED_DATE
             );
 
-            INSERT INTO SQ.ATTACHMENT_SQ (ID, ATTACHMENT_ID, SQUATTER_GUID, "TYPE")
+            INSERT INTO SQ.ATTACHMENT_SQ (ID, ATTACHMENT_ID, SQUATTER_GUID, "TYPE", IS_ACTIVE)
             VALUES (
                 v_attachment_sq_guid,
                 v_guid,
                 (SELECT ID FROM SQ.SQUATTERS WHERE SQUATTER_ID = rec.SQUATTERID),
-                converted_filetype
+                converted_filetype,
+                1
             );
         EXCEPTION
             WHEN OTHERS THEN
