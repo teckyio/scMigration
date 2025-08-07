@@ -19,9 +19,9 @@ BEGIN
         BEGIN
 
             IF rec.FILE_TYPE = 'N' THEN
-                folder_name := 'RepairRebuildNoti';
+                folder_name := 'Repair_Rebuild_DFA ';
             ELSIF rec.FILE_TYPE = 'V' THEN
-                folder_name := 'OccupantsVRNotiLetter';
+                folder_name := 'VRS_DFA ';
             ELSE
                 RAISE_APPLICATION_ERROR(-20001, 'Invalid folder_name: ' || rec.FILE_TYPE);
             END IF;
